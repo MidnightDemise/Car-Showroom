@@ -1,21 +1,111 @@
-import { Environment, Float, Lightformer, useGLTF } from '@react-three/drei'
-import { applyProps, useFrame } from '@react-three/fiber';
-import React, { useLayoutEffect, useRef } from 'react'
+import { CubeCamera, Environment, Float, Lightformer, MeshReflectorMaterial, OrbitControls, PivotControls, PointMaterial, TransformControls, useFBX, useGLTF, useTexture } from '@react-three/drei'
+import { applyProps, useFrame, useLoader } from '@react-three/fiber';
+import { Color, Depth, LayerMaterial } from 'lamina';
+import React, { useEffect, useLayoutEffect, useRef } from 'react'
+import * as THREE from 'three'
+import {BlendFunction} from 'postprocessing'
+
 
 const MainPageOriginal = () => {
+
+  const positionBackground = useRef();
+
+ 
+
   return (
     <>
 
         <ambientLight/>
         <directionalLight/>
-        <FordGT />
+        
+        <FordGT  position={[0,-1,7]} rotation={[0,  Math.PI  ,0]}/>
+        {/* <Ground/> */}
+        
+        <BackGround ref={positionBackground} position ={[0 , -0.3 , 7]}  rotation={[0 , Math.PI  / 2  , 0]}/>
         <Environment resolution={256} background blur={1} frames={Infinity}>
             <LightFormers/>
-        </Environment>
+           
+        </Environment> 
     </>
   )
 }
 
+
+function Ground()
+{
+
+  // const [diffuse, displacement] = useLoader(THREE.TextureLoader, [
+  //   "GroundTextures/RubberTiles/textures/dif.jpg",
+  //   "GroundTextures/RubberTiles/textures/disp.png",
+  // ]);
+
+  const [diffuse , displacement , roughness , normal , arm ] = useTexture([
+    "GroundTextures/RubberTiles/textures/dif.jpg",
+    "GroundTextures/RubberTiles/textures/disp.png",
+    "GroundTextures/RubberTiles/textures/roughness.png",
+    "GroundTextures/RubberTiles/textures/normal.png",
+    "GroundTextures/RubberTiles/textures/ARM.png"
+  
+  ]
+  
+  )
+
+
+  useEffect(() => {
+    [diffuse , displacement, roughness , normal , arm].forEach((t) =>{
+
+      t.wrapS = THREE.RepeatWrapping;
+      t.wrapT = THREE.RepeatWrapping;
+      t.offset.set(0,0);
+    })
+  })
+    return (
+      <>
+        
+
+        <mesh rotation={[-Math.PI / 2, 0 ,0]} position={[-1,-1.1,5]}>
+          <planeGeometry  args={[10,10]} />
+          <meshStandardMaterial
+          map={diffuse}
+          normalMap={normal}
+          roughnessMap={roughness}
+          metalness={0}
+
+          
+          displacementMap={displacement} // Apply displacement map
+          displacementScale={0.1} // Adjust displacement scale as needed
+          normalScale={10}
+          aoMap={arm}
+            
+        
+         
+          />
+        </mesh>
+      
+      </>
+    )
+}
+
+
+
+function BackGround(props)
+{
+  
+  
+  const warehouse = useGLTF("MainPageWarehouse/Warehouse2/scene.gltf")
+
+
+  
+  return (
+    <>
+    <PivotControls >
+    <primitive object= {warehouse.scene} {...props}/>
+    </PivotControls>
+    
+      
+    </>
+  )
+}
 
 function LightFormers({positions = [2,0,2,0,2,0,2,0]})
 {
@@ -31,22 +121,43 @@ function LightFormers({positions = [2,0,2,0,2,0,2,0]})
     })
     return (
         <>
-        <Lightformer intensity={0.1} position={[0 , 9 , 0]} rotation={[Math.PI /2 , 0 , 0]} color={"white"}/>
         <group ref={group}>
             {positions.map((x, i) => (
-              <Lightformer key={i} form="circle" intensity={2} rotation={[Math.PI / 2, 0, 0]} position={[x, 4, i * 4]} scale={[3, 1, 1]} />
+              <Lightformer color={"white"} key={i} form="circle" intensity={0.4} rotation={[Math.PI / 2, Math.PI / 4, 0]} position={[-6, 3, i * 4]} scale={[3, 1, 1]} />
             ))}
         </group>
         
-        <Lightformer  color={"blue"} intensity={2} position={[-5, -1, -1]} scale={[20, 0.5, 1]} />
-        <Lightformer color={"red"} intensity={2} position={[10, 1, 0]} scale={[20, 1, 1]} />
-        <Lightformer  rotation={[-Math.PI / 2 , 0 ,0]} position={[0,-5,0]}/>
+        
 
-        <Float>
-            <Lightformer color={"red"} form={"circle"} position={[-4,0,0]} scale={[3,1,1]}/>
-        </Float>
+       
+            <Lightformer rotation={[0,  Math.PI / 2 ,0]} intensity={0.8} color={"white"} form={"circle"} position={[-1,0,19]} scale={[20,1,1]}/>
+            
+       
+
+        <mesh scale={100}>
+        <sphereGeometry args={[1, 64, 64]} />
+        <LayerMaterial side={THREE.BackSide}>
+          <Color color="#444" alpha={1} mode="normal" />
+          <Depth colorA="red" colorB="blue"  alpha={0.8} mode="normal" near={0} far={300} origin={[100, 100, 100]} />
+        </LayerMaterial>
+      </mesh>
+
+        
+
+
+        
         </>
     )
+}
+
+
+
+function CameraRig({ v = new THREE.Vector3() }) {
+  return useFrame((state) => {
+    const t = state.clock.elapsedTime
+    state.camera.position.lerp(v.set(Math.sin(t / 5), 0, 12 + Math.cos(t / 5) / 2), 0.05)
+    state.camera.lookAt(0, 0, 0)
+  })
 }
 
 
@@ -57,7 +168,10 @@ function FordGT(props) {
 
     useLayoutEffect(() => {
       Object.values(nodes).forEach((node) => node.isMesh && (node.receiveShadow = node.castShadow = true))
-        
+      applyProps(materials.Body , { envMapIntensity : 5  , color: "#000000"})
+    applyProps(materials.Black_Metal, { envMapIntensity : 1 , emissiveIntensity: 1 , color: "#EEEEEE" })
+    applyProps(materials.Metal_Ring , { envMapIntensity : 1 , emissiveIntensity : 1 , color:"#FFFFFF"})
+    
   }, [nodes, materials])
 
 
