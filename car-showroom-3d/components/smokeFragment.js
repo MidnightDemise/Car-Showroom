@@ -4,15 +4,15 @@ const fragmentShader = `
 // <node_builder>
 
 // uniforms
-uniform sampler2D nodeUniform0; uniform float _time; uniform float speedofoffset; 
+uniform sampler2D nodeUniform0; uniform float _time; uniform float speedofoffset; uniform vec4 smokeColor; 
 // attributes
 
 // varys
-varying vec2 nodeVary0; varying vec3 nodeVary1; 
+varying vec2 nodeVary0; 
 // vars
-vec2 nodeVar0; vec2 nodeVar1; float nodeVar2; float nodeVar3; float nodeVar4; float nodeVar5; float nodeVar6; float nodeVar7; float nodeVar8; float nodeVar9; float nodeVar10; vec2 nodeVar11; vec4 nodeVar12; vec2 nodeVar13; float nodeVar14; float nodeVar15; vec4 nodeVar16; vec4 nodeVar17; vec4 nodeVar18; 
+vec2 nodeVar0; vec2 nodeVar1; float nodeVar2; float nodeVar3; float nodeVar4; float nodeVar5; float nodeVar6; float nodeVar7; float nodeVar8; vec2 nodeVar9; vec4 nodeVar10; vec2 nodeVar11; float nodeVar12; float nodeVar13; vec4 nodeVar14; vec4 nodeVar15; vec4 nodeVar16; vec3 nodeVar17; 
 // codes
-vec2 customFn_2cCBmc22qjes ( vec2 uv, float height, float scale, vec3 viewDir ) {
+vec2 customFn_X520ZNV9hG0b ( vec2 uv, float height, float scale, vec3 viewDir ) {
                 
     
     // >(^.^)<
@@ -20,13 +20,13 @@ vec2 customFn_2cCBmc22qjes ( vec2 uv, float height, float scale, vec3 viewDir ) 
     return offset;
     
             }
-vec3 mod2D289_t6PPhtMMg3P4 ( vec3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
+vec3 mod2D289_VkSFbTUTJxa1 ( vec3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
 
-	vec2 mod2D289_t6PPhtMMg3P4( vec2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
+	vec2 mod2D289_VkSFbTUTJxa1( vec2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
 
-	vec3 permute_t6PPhtMMg3P4( vec3 x ) { return mod2D289_t6PPhtMMg3P4( ( ( x * 34.0 ) + 1.0 ) * x ); }
+	vec3 permute_VkSFbTUTJxa1( vec3 x ) { return mod2D289_VkSFbTUTJxa1( ( ( x * 34.0 ) + 1.0 ) * x ); }
 
-    float snoise_t6PPhtMMg3P4( vec2 v ){
+    float snoise_VkSFbTUTJxa1( vec2 v ){
         const vec4 C = vec4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
         vec2 i = floor( v + dot( v, C.yy ) );
         vec2 x0 = v - i + dot( i, C.xx );
@@ -34,8 +34,8 @@ vec3 mod2D289_t6PPhtMMg3P4 ( vec3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) 
         i1 = ( x0.x > x0.y ) ? vec2( 1.0, 0.0 ) : vec2( 0.0, 1.0 );
         vec4 x12 = x0.xyxy + C.xxzz;
         x12.xy -= i1;
-        i = mod2D289_t6PPhtMMg3P4( i );
-        vec3 p = permute_t6PPhtMMg3P4( permute_t6PPhtMMg3P4( i.y + vec3( 0.0, i1.y, 1.0 ) ) + i.x + vec3( 0.0, i1.x, 1.0 ) );
+        i = mod2D289_VkSFbTUTJxa1( i );
+        vec3 p = permute_VkSFbTUTJxa1( permute_VkSFbTUTJxa1( i.y + vec3( 0.0, i1.y, 1.0 ) ) + i.x + vec3( 0.0, i1.x, 1.0 ) );
         vec3 m = max( 0.5 - vec3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
         m = m * m;
         m = m * m;
@@ -49,9 +49,9 @@ vec3 mod2D289_t6PPhtMMg3P4 ( vec3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) 
         g.yz = a0.yz * x12.xz + h.yz * x12.yw;
         return 130.0 * dot( m, g );
     }
-float customFn_g2ZS1c21nfPQ ( vec2 uv, float scale ) {
+float customFn_uq8FzXI3Yklg ( vec2 uv, float scale ) {
                 
-    float noise = snoise_t6PPhtMMg3P4( uv * scale );
+    float noise = snoise_VkSFbTUTJxa1( uv * scale );
     
     noise = noise*0.5 + 0.5;
     return noise;
@@ -2244,17 +2244,7 @@ void main() {
 
 #endif
 
-
-	diffuseColor = vec4( 0, 0, 0, 1 );
-
-
-#ifdef USE_ALPHAMAP
-
-	diffuseColor.a *= texture2D( alphaMap, vUv ).g;
-
-#endif
-
-nodeVar0 = customFn_2cCBmc22qjes( nodeVary0, 0.0, 0.0, vec3( 0, 0, 0 ) );
+nodeVar0 = customFn_X520ZNV9hG0b( nodeVary0, 0.0, 0.0, vec3( 0, 0, 0 ) );
 	nodeVar1 = ( nodeVar0 - vec2( 0.5 ) );
 	nodeVar2 = (length(nodeVar1));
 	nodeVar3 = ( nodeVar2 / 0.25 );
@@ -2263,18 +2253,27 @@ nodeVar0 = customFn_2cCBmc22qjes( nodeVary0, 0.0, 0.0, vec3( 0, 0, 0 ) );
 	nodeVar6 = ( _time * 1.0 );
 	nodeVar7 = nodeVar6;
 	nodeVar8 = ( nodeVar7 * speedofoffset );
-	nodeVar9 = (mix(-1.0, nodeVary1.x, fract(sin(dot(vec2( 9, 0 ), vec2(12.9898, 78.233)))*43758.5453)));
-		
-	nodeVar10 = ( nodeVar8 * nodeVar9 );
-	nodeVar11 = (nodeVary0 * vec2( 1, 1 ) + vec2( nodeVar10 ));
-	nodeVar12 = ( texture2D( nodeUniform0, nodeVar11 ) );
-	nodeVar13 = (nodeVary0 * vec2( 1, 1 ) + vec2( nodeVar8 ));
-	nodeVar14 = customFn_g2ZS1c21nfPQ( nodeVar13, 7.0 );
-	nodeVar15 = ( nodeVar14 + 0.0 );
-	nodeVar16 = ( nodeVar12 * vec4( vec3( nodeVar15 ), 1.0 ) );
-	nodeVar17 = ( vec4( vec3( nodeVar5 ), 1.0 ) * nodeVar16 );
+	nodeVar9 = (nodeVary0 * vec2( 1, 1 ) + vec2( nodeVar8 ));
+	nodeVar10 = ( texture2D( nodeUniform0, nodeVar9 ) );
+	nodeVar11 = (nodeVary0 * vec2( 1, 1 ) + vec2( nodeVar8 ));
+	nodeVar12 = customFn_uq8FzXI3Yklg( nodeVar11, 7.0 );
+	nodeVar13 = ( nodeVar12 + 0.0 );
+	nodeVar14 = ( nodeVar10 * vec4( vec3( nodeVar13 ), 1.0 ) );
+	nodeVar15 = ( vec4( vec3( nodeVar5 ), 1.0 ) * nodeVar14 );
+	nodeVar16 = ( nodeVar15 * smokeColor );
+	nodeVar17 = ( nodeVar16.xyz * vec3( 1, 1, 1 ) );
 	
-	diffuseColor.a = nodeVar17.x;
+	diffuseColor = vec4( nodeVar17, 1.0 );
+
+
+#ifdef USE_ALPHAMAP
+
+	diffuseColor.a *= texture2D( alphaMap, vUv ).g;
+
+#endif
+
+
+	diffuseColor.a = nodeVar15.x;
 
 
 #ifdef USE_ALPHATEST
@@ -2309,6 +2308,9 @@ float metalnessFactor = 0.0;
 	metalnessFactor *= texelMetalness.b;
 
 #endif
+
+
+	metalnessFactor = nodeVar16.x;
 
 
 float faceDirection = gl_FrontFacing ? 1.0 : - 1.0;
@@ -2391,9 +2393,8 @@ vec3 geometryNormal = normal;
 
 #endif
 
-nodeVar18 = ( nodeVar17 * vec4( 0, 0.9803921568627451, 1, 1 ) );
-	
-	totalEmissiveRadiance = nodeVar18.xyz * vec3(1);
+
+	totalEmissiveRadiance = nodeVar16.xyz * vec3(1);
 
 
 	// accumulation
@@ -2882,8 +2883,6 @@ gl_FragColor = linearToOutputTexel( gl_FragColor );
 
 
 }
-
-
 
 
 

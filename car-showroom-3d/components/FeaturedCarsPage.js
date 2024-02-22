@@ -1,0 +1,133 @@
+import { Model } from '@/components/ShowroomGLTFConversion';
+import { CubeCamera, Environment, Float, Lightformer, useGLTF } from '@react-three/drei'
+import { applyProps, useFrame } from '@react-three/fiber';
+import React, { useEffect, useLayoutEffect, useMemo, useRef } from 'react'
+import * as THREE from 'three';
+import * as LAMINA from 'lamina'
+import vertexShader from './smokeVertex';
+import fragmentShader from './smokeFragment';
+
+
+function MovingShader() {
+
+    
+    const uniforms = useMemo(() => ({
+        _time: { value: 0 },
+        speedofoffset: { value: 0.08 },
+        nodeUniform0: { value: new THREE.TextureLoader().load("https://static.nodetoy.co/static/texture_library/noise/512/Noise_002.jpg")},
+        smokeColor: { value: { x: 0 , y: 255, z: 255, w: 1 } }, // Comma added here
+    }), []);
+
+    useFrame((state) => {
+        const { clock } = state;
+        uniforms._time.value = clock.getElapsedTime();
+    });
+
+      
+      
+    return (
+        <shaderMaterial
+            vertexShader={vertexShader}
+            fragmentShader={fragmentShader}
+            uniforms={uniforms} // Pass time as uniform
+            
+            transparent={true} // Enable transparency
+           
+        />
+    );
+}
+
+
+
+
+
+
+
+
+function Lambo(props)
+{
+    const {scene , nodes , materials} = useGLTF("FeaturedCars/Lambo/scene.gltf");
+
+    console.log(materials);
+    useEffect(() => {
+        Object.values(nodes).forEach((node) => {
+            if(node.isMesh)
+            {
+                node.castShadow = true;
+                node.receiveShadow = true;
+            }
+        })
+
+        applyProps(materials.Carosserie , {color: "#000000" , emissive: "#000000" , envMapIntensity : 10 , emissiveIntensity: 5})
+        // applyProps(materials.Tire , {color: "#000000" , emissive: "#000000" , envMapIntensity : 10 , emissiveIntensity: 5})
+    })
+    return (
+        <>
+            <primitive object={scene} {...props}/>
+        </>
+    )
+}
+
+
+
+
+function Showroom(props)
+{
+    return (
+        <>
+             <Model {...props}/>
+        </>
+    )
+}
+
+const FeaturedCarsPage = () => {
+   
+    
+     
+  return (
+    <>
+       
+       <mesh scale={5} position={[1,0,4]} rotation={[-Math.PI /2 , 0 , 0]}>
+        <planeGeometry args={[30,30]}/>
+        <MovingShader/>
+       </mesh>
+         <Showroom />
+        <Lambo position= {[0,1.1,0]} scale={5}/> 
+        <Environment background blur={10} resolution={256} frames={Infinity}>
+            <Lightformers/>
+        </Environment>
+            
+         
+        
+    </>
+  )
+}
+
+function Lightformers({ positions = [2, 0, 2, 0, 2, 0, 2, 0] }) {
+    
+    return (
+      <>
+        {/* Ceiling */}
+        
+        {/* Sides */}
+       
+        {/* Accent (red) */}
+        
+        
+        {/* Background */}
+        <Float>
+        <mesh scale={100}>
+          <sphereGeometry args={[1, 64, 64]} />
+          <LAMINA.LayerMaterial refractionRatio={5} reflectivity={5} emissiveIntensity={1} lightMapIntensity={50} side={THREE.BackSide}>
+            <LAMINA.Color color="#444" alpha={.5} mode="additive" />
+            <LAMINA.Depth colorA="blue" colorB="cyan" alpha={.5} mode="additive" near={0} far={300} origin={[100, 100, 100]} />
+          </LAMINA.LayerMaterial>
+        </mesh>
+        </Float>
+        
+      </>
+    )
+  }
+    
+
+export default FeaturedCarsPage

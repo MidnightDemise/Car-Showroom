@@ -84,8 +84,8 @@ function Porsche(props) {
         <mesh scale={100}>
           <sphereGeometry args={[1, 64, 64]} />
           <LAMINA.LayerMaterial side={THREE.BackSide}>
-            <LAMINA.Color color="#444" alpha={1} mode="normal" />
-            <LAMINA.Depth colorA="blue" colorB="black" alpha={0.5} mode="normal" near={0} far={300} origin={[100, 100, 100]} />
+            <LAMINA.Color color="#444" alpha={.5} mode="normal" />
+            <LAMINA.Depth colorA="blue" colorB="red" alpha={0.5} mode="normal" near={0} far={300} origin={[100, 100, 100]} />
           </LAMINA.LayerMaterial>
         </mesh>
       </>

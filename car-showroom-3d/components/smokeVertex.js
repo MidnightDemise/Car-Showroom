@@ -6,9 +6,9 @@ const vertexShader = `
 // uniforms
 
 // attributes
-attribute vec3 color; 
+
 // varys
-varying vec2 nodeVary0; varying vec3 nodeVary1; 
+varying vec2 nodeVary0; 
 // vars
 
 // codes
@@ -383,7 +383,6 @@ vec2 equirectUv( in vec3 dir ) {
 
 void main() {
 nodeVary0 = uv;
-	nodeVary1 = color;
 	
 
 
