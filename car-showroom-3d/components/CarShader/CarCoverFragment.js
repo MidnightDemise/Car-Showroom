@@ -1,18 +1,18 @@
-const fragmentShader = `
+const carFragment = `
 // Created with NodeToy | Three.js r149
 
 // <node_builder>
 
 // uniforms
-uniform sampler2D nodeUniform0; uniform float _time; uniform float speedofoffset; uniform vec4 smokeColor; 
+uniform float _time; uniform vec4 colorForShader; 
 // attributes
 
 // varys
 varying vec2 nodeVary0; 
 // vars
-vec2 nodeVar0; vec2 nodeVar1; float nodeVar2; float nodeVar3; float nodeVar4; float nodeVar5; float nodeVar6; float nodeVar7; float nodeVar8; vec2 nodeVar9; vec4 nodeVar10; vec2 nodeVar11; float nodeVar12; float nodeVar13; vec4 nodeVar14; vec4 nodeVar15; vec4 nodeVar16; vec3 nodeVar17; 
+vec2 nodeVar0; float nodeVar1; float nodeVar2; float nodeVar3; float nodeVar4; float nodeVar5; float nodeVar6; float nodeVar7; float nodeVar8; vec4 nodeVar9; 
 // codes
-vec2 customFn_X520ZNV9hG0b ( vec2 uv, float height, float scale, vec3 viewDir ) {
+vec2 customFn_cnrlt3Qy8IUx ( vec2 uv, float height, float scale, vec3 viewDir ) {
                 
     
     // >(^.^)<
@@ -20,42 +20,13 @@ vec2 customFn_X520ZNV9hG0b ( vec2 uv, float height, float scale, vec3 viewDir ) 
     return offset;
     
             }
-vec3 mod2D289_VkSFbTUTJxa1 ( vec3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-
-	vec2 mod2D289_VkSFbTUTJxa1( vec2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
-
-	vec3 permute_VkSFbTUTJxa1( vec3 x ) { return mod2D289_VkSFbTUTJxa1( ( ( x * 34.0 ) + 1.0 ) * x ); }
-
-    float snoise_VkSFbTUTJxa1( vec2 v ){
-        const vec4 C = vec4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
-        vec2 i = floor( v + dot( v, C.yy ) );
-        vec2 x0 = v - i + dot( i, C.xx );
-        vec2 i1;
-        i1 = ( x0.x > x0.y ) ? vec2( 1.0, 0.0 ) : vec2( 0.0, 1.0 );
-        vec4 x12 = x0.xyxy + C.xxzz;
-        x12.xy -= i1;
-        i = mod2D289_VkSFbTUTJxa1( i );
-        vec3 p = permute_VkSFbTUTJxa1( permute_VkSFbTUTJxa1( i.y + vec3( 0.0, i1.y, 1.0 ) ) + i.x + vec3( 0.0, i1.x, 1.0 ) );
-        vec3 m = max( 0.5 - vec3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
-        m = m * m;
-        m = m * m;
-        vec3 x = 2.0 * fract( p * C.www ) - 1.0;
-        vec3 h = abs( x ) - 0.5;
-        vec3 ox = floor( x + 0.5 );
-        vec3 a0 = x - ox;
-        m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
-        vec3 g;
-        g.x = a0.x * x0.x + h.x * x0.y;
-        g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-        return 130.0 * dot( m, g );
-    }
-float customFn_uq8FzXI3Yklg ( vec2 uv, float scale ) {
+float remap_6rAWBy6PpNyQ ( float value, float minOld, float maxOld, float minNew, float maxNew ) {
+		float x = ( value - minOld ) / ( maxOld - minOld );
+		return minNew + ( maxNew - minNew ) * x;
+	}
+float customFn_9QvCeALANoVx ( float value, float minOld, float maxOld, float minNew, float maxNew ) {
                 
-    float noise = snoise_VkSFbTUTJxa1( uv * scale );
-    
-    noise = noise*0.5 + 0.5;
-    return noise;
-    
+    return remap_6rAWBy6PpNyQ( value, minOld, maxOld, minNew, maxNew );
             
             }
 
@@ -2244,26 +2215,8 @@ void main() {
 
 #endif
 
-nodeVar0 = customFn_X520ZNV9hG0b( nodeVary0, 0.0, 0.0, vec3( 0, 0, 0 ) );
-	nodeVar1 = ( nodeVar0 - vec2( 0.5 ) );
-	nodeVar2 = (length(nodeVar1));
-	nodeVar3 = ( nodeVar2 / 0.25 );
-	nodeVar4 = (pow(nodeVar3,6.0));
-	nodeVar5 = ( 1.0 - nodeVar4 );
-	nodeVar6 = ( _time * 1.0 );
-	nodeVar7 = nodeVar6;
-	nodeVar8 = ( nodeVar7 * speedofoffset );
-	nodeVar9 = (nodeVary0 * vec2( 1, 1 ) + vec2( nodeVar8 ));
-	nodeVar10 = ( texture2D( nodeUniform0, nodeVar9 ) );
-	nodeVar11 = (nodeVary0 * vec2( 1, 1 ) + vec2( nodeVar8 ));
-	nodeVar12 = customFn_uq8FzXI3Yklg( nodeVar11, 7.0 );
-	nodeVar13 = ( nodeVar12 + 0.0 );
-	nodeVar14 = ( nodeVar10 * vec4( vec3( nodeVar13 ), 1.0 ) );
-	nodeVar15 = ( vec4( vec3( nodeVar5 ), 1.0 ) * nodeVar14 );
-	nodeVar16 = ( nodeVar15 * smokeColor );
-	nodeVar17 = ( nodeVar16.xyz * vec3( 1, 1, 1 ) );
-	
-	diffuseColor = vec4( nodeVar17, 1.0 );
+
+	diffuseColor = vec4( 0, 0, 0, 1 );
 
 
 #ifdef USE_ALPHAMAP
@@ -2272,8 +2225,17 @@ nodeVar0 = customFn_X520ZNV9hG0b( nodeVary0, 0.0, 0.0, vec3( 0, 0, 0 ) );
 
 #endif
 
-
-	diffuseColor.a = nodeVar15.x;
+nodeVar0 = customFn_cnrlt3Qy8IUx( nodeVary0, 0.0, 0.0, vec3( 0, 0, 0 ) );
+	nodeVar1 = ( nodeVar0.y + -1.0 );
+	nodeVar2 = abs( nodeVar1 );
+	nodeVar3 = (length(nodeVar2));
+	nodeVar4 = ( _time * 0.2 );
+	nodeVar5 = nodeVar4;
+	nodeVar6 = sin( nodeVar5 );
+	nodeVar7 = customFn_9QvCeALANoVx( nodeVar6, 0.0, 1.0, -10.0, 1.0 );
+	nodeVar8 = step( nodeVar3, nodeVar7 );
+	
+	diffuseColor.a = nodeVar8;
 
 
 #ifdef USE_ALPHATEST
@@ -2308,9 +2270,6 @@ float metalnessFactor = 0.0;
 	metalnessFactor *= texelMetalness.b;
 
 #endif
-
-
-	metalnessFactor = nodeVar16.x;
 
 
 float faceDirection = gl_FrontFacing ? 1.0 : - 1.0;
@@ -2393,8 +2352,9 @@ vec3 geometryNormal = normal;
 
 #endif
 
-
-	totalEmissiveRadiance = nodeVar16.xyz * vec3(1);
+nodeVar9 = ( vec4( vec3( nodeVar8 ), 1.0 ) * colorForShader );
+	
+	totalEmissiveRadiance = nodeVar9.xyz * vec3(1);
 
 
 	// accumulation
@@ -2891,5 +2851,4 @@ gl_FragColor = linearToOutputTexel( gl_FragColor );
 
 `
 
-
-export default fragmentShader;
+export default carFragment;

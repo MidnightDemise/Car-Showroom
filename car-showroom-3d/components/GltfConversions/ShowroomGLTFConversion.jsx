@@ -9,9 +9,13 @@ Title: Scifi Tron Studio | Baked
 
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
-
+import * as THREE from 'three';
 export function Model(props) {
   const { nodes, materials } = useGLTF('/showroom.glb')
+
+
+   
+
   return (
     <group {...props} dispose={null}>
       <group scale={0.01}>

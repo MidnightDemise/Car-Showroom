@@ -1,11 +1,14 @@
-import { Model } from '@/components/ShowroomGLTFConversion';
-import { CubeCamera, Environment, Float, Lightformer, useGLTF } from '@react-three/drei'
+import { Model } from '@/components/GltfConversions/ShowroomGLTFConversion';
+import { CubeCamera, Environment, Float, Lightformer, OrbitControls, PerspectiveCamera, useGLTF } from '@react-three/drei'
 import { applyProps, useFrame } from '@react-three/fiber';
-import React, { useEffect, useLayoutEffect, useMemo, useRef } from 'react'
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three';
 import * as LAMINA from 'lamina'
-import vertexShader from './smokeVertex';
-import fragmentShader from './smokeFragment';
+import vertexShader from './GroundShader/smokeVertex';
+import fragmentShader from './GroundShader/smokeFragment';
+import carVertex from './CarShader/CarCoverVertex';
+import carFragment from './CarShader/CarCoverFragment';
+import { Bloom, EffectComposer } from '@react-three/postprocessing';
 
 
 function MovingShader() {
@@ -40,6 +43,58 @@ function MovingShader() {
 
 
 
+function Lambo1(props)
+{
+    const {scene , nodes , materials} = useGLTF("FeaturedCars/Lambo/scene.gltf");
+
+    
+    const [nodeColor, setNodeColor] = useState(new THREE.Vector4(1 ,1 , 1, 1));
+
+
+        const uniforms = useMemo(() => ({
+          _time: { value: 0 },
+          colorForShader: { value: nodeColor }, // Comma added here
+
+      }), [nodeColor]);
+
+      useFrame((state) => {
+          const { clock } = state;
+          uniforms._time.value = clock.getElapsedTime();
+      });
+
+
+    useEffect(() => {
+        Object.values(nodes).forEach((node) => {
+            if(node.isMesh)
+            {
+                node.castShadow = true;
+                node.receiveShadow = true;
+            }
+            
+           
+            const customShader = new THREE.ShaderMaterial({
+              uniforms: uniforms,
+              vertexShader: carVertex,
+              fragmentShader: carFragment,
+
+              transparent: true
+              
+            })
+            
+
+            node.material = customShader;
+        })
+
+        applyProps(materials.Carosserie , {color: "#000000" , emissive: "#000000" , envMapIntensity : 10 , emissiveIntensity: 5})
+        // applyProps(materials.Tire , {color: "#000000" , emissive: "#000000" , envMapIntensity : 10 , emissiveIntensity: 5})
+    })
+    return (
+        <>
+            <primitive object={scene} {...props}/>
+        </>
+    )
+}
+
 
 
 
@@ -48,7 +103,21 @@ function Lambo(props)
 {
     const {scene , nodes , materials} = useGLTF("FeaturedCars/Lambo/scene.gltf");
 
-    console.log(materials);
+    const [nodeColor, setNodeColor] = useState(new THREE.Vector4(1 ,1 , 1, 1));
+
+
+        const uniforms = useMemo(() => ({
+          _time: { value: 0 },
+          colorForShader: { value: nodeColor }, // Comma added here
+
+      }), [nodeColor]);
+
+      useFrame((state) => {
+          const { clock } = state;
+          uniforms._time.value = clock.getElapsedTime();
+      });
+
+
     useEffect(() => {
         Object.values(nodes).forEach((node) => {
             if(node.isMesh)
@@ -63,7 +132,7 @@ function Lambo(props)
     })
     return (
         <>
-            <primitive object={scene} {...props}/>
+            <primitive object={scene.clone()} {...props}/>
         </>
     )
 }
@@ -86,17 +155,31 @@ const FeaturedCarsPage = () => {
      
   return (
     <>
-       
-       <mesh scale={5} position={[1,0,4]} rotation={[-Math.PI /2 , 0 , 0]}>
-        <planeGeometry args={[30,30]}/>
-        <MovingShader/>
-       </mesh>
-         <Showroom />
-        <Lambo position= {[0,1.1,0]} scale={5}/> 
-        <Environment background blur={10} resolution={256} frames={Infinity}>
-            <Lightformers/>
-        </Environment>
-            
+        
+        
+
+          <mesh scale={3}  position={[1,0,1]} rotation={[-Math.PI /2 , 0 , 0]}>
+            <planeGeometry args={[30,30]}/>
+            <MovingShader/>
+          </mesh>
+
+
+            <Showroom />
+            <Lambo1 position= {[0 , 1.1 , 0] } scale={5}/>
+            <Lambo position= {[0,1.1,0]} scale={5}/> 
+          
+
+
+            <Environment background blur={10} resolution={256} frames={Infinity}>
+                <Lightformers/>
+            </Environment>
+
+
+
+            <EffectComposer>
+              <Bloom/>
+            </EffectComposer>
+                
          
         
     </>

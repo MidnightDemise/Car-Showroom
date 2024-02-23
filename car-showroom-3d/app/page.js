@@ -1,16 +1,9 @@
 'use client'
 
 import MainPageOriginal from "@/components/MainPageOriginal";
-import MainPage from "@/components/MainPageTest";
-import SmokeTest from "@/components/SmokeTest";
-import { NodeToyMaterial, NodeToyTick } from "@nodetoy/react-nodetoy";
 import { Environment, Float, OrbitControls, PerspectiveCamera, TransformControls, useFBX } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Bloom, EffectComposer } from "@react-three/postprocessing";
-import { useEffect, useRef, useState } from "react";
 import * as THREE from 'three'
-import vertexShader from "@/components/smokeVertex";
-import fragmentShader from "@/components/smokeFragment";
 import FeaturedCarsPage from "@/components/FeaturedCarsPage";
 
 
@@ -28,8 +21,10 @@ export default function Home() {
       <Canvas flat linear style={{width: "100vw", height: "100vh"}}>
         <color args={[ 0 , 0 ,0]}  attach={"background"}/>
         <ambientLight intensity={15}/>
-        
-        <OrbitControls/> 
+        <PerspectiveCamera makeDefault position={[0, 11, 20]}/>
+        <OrbitControls autoRotate autoRotateSpeed={3} camera={undefined} enablePan={false} enableZoom={false} />
+       
+     
 
 {/*            
           <Float floatingRange={0.1} rotationIntensity={0.2} floatIntensity={0.3}>
@@ -46,20 +41,4 @@ export default function Home() {
    </>
   )
 }
-   {/* <OrbitControls makeDefault/>   */}
-       {/* <ambientLight/>
-        <directionalLight/>*/}
-        {/* <NodeToyTick/> */}
-        
-        {/* 
-        <TransformControls>
-        <mesh>
-          <boxGeometry attach="geometry" args={[1, 1, 1]} />
-          <NodeToyMaterial  parameters={{
-                lights: false, // Disable lights affecting the material
-                envMap: false, // Disable environment map affecting the material
-              }} url={"https://draft.nodetoy.co/OUsvR8blhs7VwoIX"} />
-        </mesh> 
-        </TransformControls>
-        */
-      }
+  
