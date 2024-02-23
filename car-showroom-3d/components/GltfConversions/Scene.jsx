@@ -19,34 +19,6 @@ export function Model(props) {
   const { nodes, materials } = useGLTF('FeaturedCarsShowroom/scene.gltf')
 
 
-//   const uniforms = useMemo(() => ({
-//     MapColor: { value: {x: 1, y: 1 , z: 1 , w: 1} },
-//     mapTexture: { value: new THREE.TextureLoader().load("FeaturedCarsShowroom/textures/screen.001_baseColor.png")},
-
-// }), []);
-
-
-//   useEffect(() => {
-//     Object.values(nodes).forEach((node) => {
-     
-//       if(node.isMesh)
-//       {
-//         const customShader = new ShaderMaterial(
-//           {
-//             uniforms: uniforms,
-//             vertexShader: mapVertex,
-//             fragmentShader: mapFragment,
-            
-//           }
-
-//         )
-
-//         node.material = customShader;
-//       }
-//     })
-    
-//   },[nodes])
-
 
   return (
     <group {...props} dispose={null}>
