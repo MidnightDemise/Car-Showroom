@@ -10,6 +10,8 @@ import carVertex from './CarShader/CarCoverVertex';
 import carFragment from './CarShader/CarCoverFragment';
 import { Bloom, EffectComposer } from '@react-three/postprocessing';
 import { Model } from './GltfConversions/Scene';
+import hologramFragment from './hologramShader/hologramFragment';
+import hologramVertex from './hologramShader/hologramVertex';
 
 
 function MovingShader() {
@@ -152,6 +154,33 @@ function Showroom(props)
 }
 
 
+function Hologram(props)
+{
+  const uniforms = useMemo( () => ({
+    _time: {value: 0},
+    hologramColor: {value: {x: 0.027450980392156862 , y: 1 , z : 0.9921 , w : 1}}
+    
+  }),[])
+
+  useFrame((state) => {
+    uniforms._time.value = state.clock.getElapsedTime();
+  })
+  return (
+
+    <>
+      <mesh {...props}>
+        <sphereGeometry args={[1,64,64]}/>
+        <shaderMaterial 
+        uniforms={uniforms}
+        vertexShader={hologramVertex}
+        fragmentShader={hologramFragment}
+        transparent
+        />
+      </mesh>
+    </>
+  )
+}
+
 
 
 
@@ -171,7 +200,8 @@ const FeaturedCarsPage = () => {
             <Showroom />
             <Lambo1 position= {[0 , 1.1 , 0] } scale={5}/>
             <Lambo position= {[0,1.1,0]} scale={5}/> 
-          
+            <Hologram scale={2} position={[15,5,5]}/>
+            <Hologram scale={2} position={[-15,5,5]}/>
 
 
             <Environment background blur={10} resolution={256} frames={Infinity}>
