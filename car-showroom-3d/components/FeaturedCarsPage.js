@@ -1,4 +1,4 @@
-import { Model } from '@/components/GltfConversions/ShowroomGLTFConversion';
+
 import { CubeCamera, Environment, Float, Lightformer, OrbitControls, PerspectiveCamera, useGLTF } from '@react-three/drei'
 import { applyProps, useFrame } from '@react-three/fiber';
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
@@ -9,6 +9,7 @@ import fragmentShader from './GroundShader/smokeFragment';
 import carVertex from './CarShader/CarCoverVertex';
 import carFragment from './CarShader/CarCoverFragment';
 import { Bloom, EffectComposer } from '@react-three/postprocessing';
+import { Model } from './GltfConversions/Scene';
 
 
 function MovingShader() {
@@ -18,7 +19,7 @@ function MovingShader() {
         _time: { value: 0 },
         speedofoffset: { value: 0.08 },
         nodeUniform0: { value: new THREE.TextureLoader().load("https://static.nodetoy.co/static/texture_library/noise/512/Noise_002.jpg")},
-        smokeColor: { value: { x: 0 , y: 255, z: 255, w: 1 } }, // Comma added here
+        smokeColor: { value: { x: 0 , y: 0, z: 1, w: 0 } }, // Comma added here
     }), []);
 
     useFrame((state) => {
@@ -48,7 +49,7 @@ function Lambo1(props)
     const {scene , nodes , materials} = useGLTF("FeaturedCars/Lambo/scene.gltf");
 
     
-    const [nodeColor, setNodeColor] = useState(new THREE.Vector4(1 ,1 , 1, 1));
+    const [nodeColor, setNodeColor] = useState(new THREE.Vector4( 0, 0  , 0 , 1));
 
 
         const uniforms = useMemo(() => ({
@@ -78,6 +79,7 @@ function Lambo1(props)
               fragmentShader: carFragment,
 
               transparent: true
+              
               
             })
             
@@ -149,10 +151,12 @@ function Showroom(props)
     )
 }
 
+
+
+
+
+
 const FeaturedCarsPage = () => {
-   
-    
-     
   return (
     <>
         
@@ -175,11 +179,11 @@ const FeaturedCarsPage = () => {
             </Environment>
 
 
-
+{/* 
             <EffectComposer>
               <Bloom/>
             </EffectComposer>
-                
+                 */}
          
         
     </>

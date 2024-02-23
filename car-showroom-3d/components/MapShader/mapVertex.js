@@ -1,4 +1,5 @@
-const vertexShader = `// Created with NodeToy | Three.js r149
+const mapVertex =  `
+// Created with NodeToy | Three.js r149
 
 // <node_builder>
 
@@ -772,6 +773,7 @@ gl_Position = projectionMatrix * mvPosition;
 
 
 
+
 `
 
-export default vertexShader;
+export default mapVertex
