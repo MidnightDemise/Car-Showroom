@@ -12,6 +12,8 @@ import { Bloom, EffectComposer } from '@react-three/postprocessing';
 import { Model } from './GltfConversions/Scene';
 import hologramFragment from './hologramShader/hologramFragment';
 import hologramVertex from './hologramShader/hologramVertex';
+import portalVertex from './PortalShader/portalVertex';
+import portalFragment from './PortalShader/portalFragment';
 
 
 function MovingShader() {
@@ -183,6 +185,39 @@ function Hologram(props)
 
 
 
+function Portal(props)
+{
+  const uniforms = useMemo(() => ({
+    _time: {value: 0},
+    strengthforemission: {value: 14.62},
+    Float01: {value : 0.3}
+
+  }),[])
+
+  useFrame((state) => {
+    uniforms._time.value = state.clock.getElapsedTime();
+  })
+
+
+  return (
+  <>
+    <mesh {...props}>
+      <planeGeometry args={[7,7]}/>
+      <shaderMaterial
+      uniforms={uniforms}
+      vertexShader={portalVertex}
+      fragmentShader={portalFragment}
+      transparent
+      
+      />
+
+    </mesh>
+  </>
+  )
+}
+
+
+
 
 
 const FeaturedCarsPage = () => {
@@ -202,7 +237,7 @@ const FeaturedCarsPage = () => {
             <Lambo position= {[0,1.1,0]} scale={5}/> 
             <Hologram scale={2} position={[15,5,5]}/>
             <Hologram scale={2} position={[-15,5,5]}/>
-
+            <Portal rotation={[0  , 0 , 0]} position={[0,5,-12.5]}/>
 
             <Environment background blur={10} resolution={256} frames={Infinity}>
                 <Lightformers/>
