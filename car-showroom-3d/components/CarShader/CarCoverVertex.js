@@ -4,13 +4,13 @@ const carVertex =
     // <node_builder>
     
     // uniforms
-    
+    uniform mat4 model; 
     // attributes
     
     // varys
-    varying vec2 nodeVary0; 
-    // vars
     
+    // vars
+    vec4 nodeVar0; vec3 nodeVar1; 
     // codes
     
     // variables
@@ -382,8 +382,7 @@ const carVertex =
     
     
     void main() {
-    nodeVary0 = uv;
-        
+    
     
     
     
@@ -567,6 +566,11 @@ const carVertex =
     
     
     vec3 transformed = vec3( position );
+    
+    nodeVar0 = ( model * vec4( position, 1.0 ) );
+        nodeVar1 = nodeVar0.xyz;
+        
+        transformed = position + nodeVar1;
     
     
     #ifdef USE_MORPHTARGETS
@@ -768,6 +772,12 @@ const carVertex =
     
     #endif
     }
+    
+    
+                    
+        
+            
+    
     
     
     

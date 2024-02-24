@@ -1,15 +1,15 @@
-const carFragment = `// Created with NodeToy | Three.js r149
+const intersectionFragment = `// Created with NodeToy | Three.js r149
 
 // <node_builder>
 
 // uniforms
-
+uniform vec4 _screenSize; 
 // attributes
 
 // varys
-
+varying vec3 nodeVary0; 
 // vars
-
+vec3 nodeVar0; float nodeVar1; vec4 nodeVar2; vec4 nodeVar3; vec4 nodeVar4; float nodeVar5; float nodeVar6; 
 // codes
 
 // variables
@@ -2197,8 +2197,9 @@ void main() {
 
 #endif
 
-
-	diffuseColor = vec4( 0, 0, 0, 1 );
+nodeVar0 = ( vec4( 0, 0, 0, 1 ).xyz * vec3( 1, 1, 1 ) );
+	
+	diffuseColor = vec4( nodeVar0, 1.0 );
 
 
 #ifdef USE_ALPHAMAP
@@ -2206,6 +2207,19 @@ void main() {
 	diffuseColor.a *= texture2D( alphaMap, vUv ).g;
 
 #endif
+
+nodeVar2 = gl_FragCoord;
+	nodeVar3 = ( nodeVar2 / _screenSize );
+	nodeVar4 = nodeVar3;
+	nodeVar5 = (distance(vec4( nodeVary0, 1.0 ),nodeVar4));
+	if ( nodeVar5 > 0.0 ) {
+		nodeVar1 = 0.0;
+	} else {
+		nodeVar1 = 1.0;
+	};
+	nodeVar6 = nodeVar1;
+	
+	diffuseColor.a = nodeVar6;
 
 
 #ifdef USE_ALPHATEST
@@ -2321,6 +2335,9 @@ vec3 geometryNormal = normal;
 	totalEmissiveRadiance *= emissiveColor.rgb;
 
 #endif
+
+
+	totalEmissiveRadiance = vec3( nodeVar6 ) * vec3(1);
 
 
 	// accumulation
@@ -2813,6 +2830,11 @@ gl_FragColor = linearToOutputTexel( gl_FragColor );
 
 
 
+
+
+
+
 `
 
-export default carFragment;
+
+export default intersectionFragment
