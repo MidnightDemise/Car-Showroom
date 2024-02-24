@@ -1,5 +1,5 @@
 
-import { CubeCamera, Environment, Float, Lightformer, OrbitControls, PerspectiveCamera, useGLTF } from '@react-three/drei'
+import { Box, CubeCamera, Environment, Float, Lightformer, OrbitControls, PerspectiveCamera, Sphere, useGLTF } from '@react-three/drei'
 import { applyProps, useFrame } from '@react-three/fiber';
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three';
@@ -14,6 +14,7 @@ import hologramFragment from './hologramShader/hologramFragment';
 import hologramVertex from './hologramShader/hologramVertex';
 import portalVertex from './PortalShader/portalVertex';
 import portalFragment from './PortalShader/portalFragment';
+import { CuboidCollider, RigidBody } from '@react-three/rapier';
 
 
 function MovingShader() {
@@ -208,6 +209,7 @@ function Portal(props)
       vertexShader={portalVertex}
       fragmentShader={portalFragment}
       transparent
+      side={THREE.DoubleSide}
       
       />
 
@@ -231,12 +233,33 @@ const FeaturedCarsPage = () => {
             <MovingShader/>
           </mesh>
 
-
+          
             <Showroom />
-            <Lambo1 position= {[0 , 1.1 , 0] } scale={5}/>
-            <Lambo position= {[0,1.1,0]} scale={5}/> 
+              {/* <RigidBody type='fixed' >
+                  <Box position={[0,5,0]} args={[10,1,10]}/>
+              </RigidBody>
+
+
+              <RigidBody>
+                <Sphere position={[0,10,0]} args={[2,64,64]} />
+              </RigidBody> */}
+
+              <RigidBody colliders={false}>
+                <CuboidCollider args={[4,2,9]} position={[0,10.2,2]}/>
+              <Lambo position= {[0,8,2]} scale={5}/> 
+
+                
+              </RigidBody>
+
+
+
+
+
             <Hologram scale={2} position={[15,5,5]}/>
             <Hologram scale={2} position={[-15,5,5]}/>
+
+
+
             <Portal rotation={[0  , 0 , 0]} position={[0,5,-12.5]}/>
 
             <Environment background blur={10} resolution={256} frames={Infinity}>

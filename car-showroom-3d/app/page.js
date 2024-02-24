@@ -5,6 +5,8 @@ import { Environment, Float, OrbitControls, PerspectiveCamera, TransformControls
 import { Canvas } from "@react-three/fiber";
 import * as THREE from 'three'
 import FeaturedCarsPage from "@/components/FeaturedCarsPage";
+import { Suspense } from "react";
+import { Physics } from "@react-three/rapier";
 
 
 
@@ -22,7 +24,8 @@ export default function Home() {
         <color args={[ 0 , 0 ,0]}  attach={"background"}/>
         <ambientLight intensity={15}/>
         <PerspectiveCamera makeDefault position={[0, 11, 20]}/>
-        <OrbitControls autoRotate autoRotateSpeed={3} camera={undefined} enablePan={false} enableZoom={false} />
+        {/* <OrbitControls autoRotate autoRotateSpeed={3} camera={undefined} enablePan={false} enableZoom={false} /> */}
+        <OrbitControls/>
        
      
 
@@ -33,8 +36,13 @@ export default function Home() {
     
       {/* <MainPageOriginal/>  */}
        
-       
-         <FeaturedCarsPage/> 
+       <Suspense>
+        <Physics debug>
+          <FeaturedCarsPage/> 
+
+        </Physics>
+
+       </Suspense>
 
       </Canvas>
     
