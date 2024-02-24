@@ -1,5 +1,5 @@
-const carVertex = 
-    `// Created with NodeToy | Three.js r149
+const dissolveVertex = `
+// Created with NodeToy | Three.js r149
 
     // <node_builder>
     
@@ -770,10 +770,6 @@ const carVertex =
     }
     
     
-    
-    
-    
-    
-    
-    `
-export default carVertex;
+`
+
+export default dissolveVertex

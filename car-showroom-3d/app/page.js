@@ -25,7 +25,7 @@ export default function Home() {
       <PerspectiveCamera makeDefault position={[0, 11, 20]}/> 
          <OrbitControls autoRotate autoRotateSpeed={3} camera={undefined} enablePan={false} enableZoom={false} /> 
         
-        <Morphing/>
+        {/* <Morphing/> */}
 
 
 

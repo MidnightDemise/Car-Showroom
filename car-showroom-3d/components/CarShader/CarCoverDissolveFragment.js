@@ -1,31 +1,54 @@
-const carFragment = `// Created with NodeToy | Three.js r149
+const dissolveFragment = `
+
+// Created with NodeToy | Three.js r149
 
 // <node_builder>
 
 // uniforms
-uniform float _time; uniform vec4 colorForShader; 
+uniform float _time; 
 // attributes
 
 // varys
 varying vec2 nodeVary0; 
 // vars
-vec2 nodeVar0; float nodeVar1; float nodeVar2; float nodeVar3; float nodeVar4; float nodeVar5; float nodeVar6; float nodeVar7; float nodeVar8; vec4 nodeVar9; 
+float nodeVar0; float nodeVar1; float nodeVar2; vec2 nodeVar3; float nodeVar4; float nodeVar5; vec4 nodeVar6; 
 // codes
-vec2 customFn_ErBQgZ1Fkw4E ( vec2 uv, float height, float scale, vec3 viewDir ) {
+vec3 mod2D289_9EM7pCkJMX6x ( vec3 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
+
+	vec2 mod2D289_9EM7pCkJMX6x( vec2 x ) { return x - floor( x * ( 1.0 / 289.0 ) ) * 289.0; }
+
+	vec3 permute_9EM7pCkJMX6x( vec3 x ) { return mod2D289_9EM7pCkJMX6x( ( ( x * 34.0 ) + 1.0 ) * x ); }
+
+    float snoise_9EM7pCkJMX6x( vec2 v ){
+        const vec4 C = vec4( 0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439 );
+        vec2 i = floor( v + dot( v, C.yy ) );
+        vec2 x0 = v - i + dot( i, C.xx );
+        vec2 i1;
+        i1 = ( x0.x > x0.y ) ? vec2( 1.0, 0.0 ) : vec2( 0.0, 1.0 );
+        vec4 x12 = x0.xyxy + C.xxzz;
+        x12.xy -= i1;
+        i = mod2D289_9EM7pCkJMX6x( i );
+        vec3 p = permute_9EM7pCkJMX6x( permute_9EM7pCkJMX6x( i.y + vec3( 0.0, i1.y, 1.0 ) ) + i.x + vec3( 0.0, i1.x, 1.0 ) );
+        vec3 m = max( 0.5 - vec3( dot( x0, x0 ), dot( x12.xy, x12.xy ), dot( x12.zw, x12.zw ) ), 0.0 );
+        m = m * m;
+        m = m * m;
+        vec3 x = 2.0 * fract( p * C.www ) - 1.0;
+        vec3 h = abs( x ) - 0.5;
+        vec3 ox = floor( x + 0.5 );
+        vec3 a0 = x - ox;
+        m *= 1.79284291400159 - 0.85373472095314 * ( a0 * a0 + h * h );
+        vec3 g;
+        g.x = a0.x * x0.x + h.x * x0.y;
+        g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+        return 130.0 * dot( m, g );
+    }
+float customFn_YkNNqQkNWj81 ( vec2 uv, float scale ) {
                 
+    float noise = snoise_9EM7pCkJMX6x( uv * scale );
     
-    // >(^.^)<
-    vec2 offset = ( ( height  - 1.0 ) *  viewDir.xy *  scale ) + uv;
-    return offset;
+    noise = noise*0.5 + 0.5;
+    return noise;
     
-            }
-float remap_JuwxO8mkZ47H ( float value, float minOld, float maxOld, float minNew, float maxNew ) {
-		float x = ( value - minOld ) / ( maxOld - minOld );
-		return minNew + ( maxNew - minNew ) * x;
-	}
-float customFn_8nuAGVyfv5Wd ( float value, float minOld, float maxOld, float minNew, float maxNew ) {
-                
-    return remap_JuwxO8mkZ47H( value, minOld, maxOld, minNew, maxNew );
             
             }
 
@@ -2224,17 +2247,14 @@ void main() {
 
 #endif
 
-nodeVar0 = customFn_ErBQgZ1Fkw4E( nodeVary0, 0.0, 0.0, vec3( 0, 0, 0 ) );
-	nodeVar1 = ( nodeVar0.y + -1.0 );
-	nodeVar2 = abs( nodeVar1 );
-	nodeVar3 = (length(nodeVar2));
-	nodeVar4 = ( _time * 0.4 );
-	nodeVar5 = nodeVar4;
-	nodeVar6 = sin( nodeVar5 );
-	nodeVar7 = customFn_8nuAGVyfv5Wd( nodeVar6, 0.0, 1.0, 0.0, 1.0 );
-	nodeVar8 = step( nodeVar3, nodeVar7 );
+nodeVar0 = ( _time * 0.1 );
+	nodeVar1 = nodeVar0;
+	nodeVar2 = ( nodeVar1 * 2.16 );
+	nodeVar3 = (nodeVary0 * vec2( 1, 1 ) + vec2( nodeVar2 ));
+	nodeVar4 = customFn_YkNNqQkNWj81( nodeVar3, 8.0 );
+	nodeVar5 = step( nodeVar4, 0.5 );
 	
-	diffuseColor.a = nodeVar8;
+	diffuseColor.a = nodeVar5;
 
 
 #ifdef USE_ALPHATEST
@@ -2351,9 +2371,9 @@ vec3 geometryNormal = normal;
 
 #endif
 
-nodeVar9 = ( vec4( vec3( nodeVar8 ), 1.0 ) * colorForShader );
+nodeVar6 = ( vec4( 0, 1, 0.984313725490196, 1 ) * vec4( vec3( nodeVar5 ), 1.0 ) );
 	
-	totalEmissiveRadiance = nodeVar9.xyz * vec3(1);
+	totalEmissiveRadiance = nodeVar6.xyz * vec3(1);
 
 
 	// accumulation
@@ -2843,10 +2863,6 @@ gl_FragColor = linearToOutputTexel( gl_FragColor );
 
 }
 
-
-
-
-
 `
 
-export default carFragment;
+export default dissolveFragment;

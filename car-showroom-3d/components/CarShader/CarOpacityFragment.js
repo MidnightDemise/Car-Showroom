@@ -1,33 +1,18 @@
-const carFragment = `// Created with NodeToy | Three.js r149
+const opacityFragment = `
+
+// Created with NodeToy | Three.js r149
 
 // <node_builder>
 
 // uniforms
-uniform float _time; uniform vec4 colorForShader; 
+
 // attributes
 
 // varys
-varying vec2 nodeVary0; 
+
 // vars
-vec2 nodeVar0; float nodeVar1; float nodeVar2; float nodeVar3; float nodeVar4; float nodeVar5; float nodeVar6; float nodeVar7; float nodeVar8; vec4 nodeVar9; 
+
 // codes
-vec2 customFn_ErBQgZ1Fkw4E ( vec2 uv, float height, float scale, vec3 viewDir ) {
-                
-    
-    // >(^.^)<
-    vec2 offset = ( ( height  - 1.0 ) *  viewDir.xy *  scale ) + uv;
-    return offset;
-    
-            }
-float remap_JuwxO8mkZ47H ( float value, float minOld, float maxOld, float minNew, float maxNew ) {
-		float x = ( value - minOld ) / ( maxOld - minOld );
-		return minNew + ( maxNew - minNew ) * x;
-	}
-float customFn_8nuAGVyfv5Wd ( float value, float minOld, float maxOld, float minNew, float maxNew ) {
-                
-    return remap_JuwxO8mkZ47H( value, minOld, maxOld, minNew, maxNew );
-            
-            }
 
 // variables
 // </node_builder>
@@ -2224,17 +2209,8 @@ void main() {
 
 #endif
 
-nodeVar0 = customFn_ErBQgZ1Fkw4E( nodeVary0, 0.0, 0.0, vec3( 0, 0, 0 ) );
-	nodeVar1 = ( nodeVar0.y + -1.0 );
-	nodeVar2 = abs( nodeVar1 );
-	nodeVar3 = (length(nodeVar2));
-	nodeVar4 = ( _time * 0.4 );
-	nodeVar5 = nodeVar4;
-	nodeVar6 = sin( nodeVar5 );
-	nodeVar7 = customFn_8nuAGVyfv5Wd( nodeVar6, 0.0, 1.0, 0.0, 1.0 );
-	nodeVar8 = step( nodeVar3, nodeVar7 );
-	
-	diffuseColor.a = nodeVar8;
+
+	diffuseColor.a = 0.0;
 
 
 #ifdef USE_ALPHATEST
@@ -2350,10 +2326,6 @@ vec3 geometryNormal = normal;
 	totalEmissiveRadiance *= emissiveColor.rgb;
 
 #endif
-
-nodeVar9 = ( vec4( vec3( nodeVar8 ), 1.0 ) * colorForShader );
-	
-	totalEmissiveRadiance = nodeVar9.xyz * vec3(1);
 
 
 	// accumulation
@@ -2845,8 +2817,6 @@ gl_FragColor = linearToOutputTexel( gl_FragColor );
 
 
 
-
-
 `
 
-export default carFragment;
+export default opacityFragment

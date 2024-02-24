@@ -5,13 +5,20 @@ import { useEffect, useMemo, useState } from "react";
 import * as THREE from 'three'
 import carVertex from "../CarShader/CarCoverVertex";
 import carFragment from "../CarShader/CarCoverFragment";
+import dissolveVertex from "../CarShader/CarCoverDissolveVertex";
+import dissolveFragment from "../CarShader/CarCoverDissolveFragment";
 
 export default function LamboCover(props)
 {
     const {scene , nodes , materials} = useGLTF("FeaturedCars/Lambo/scene.gltf");
 
-    
+    const [isClick , setIsClicked] = useState(false);
     const [nodeColor, setNodeColor] = useState(new THREE.Vector4( 0, 0  , 0 , 1));
+
+
+    const click = () => {
+        setIsClicked(true);
+    }
 
 
         const uniforms = useMemo(() => ({
@@ -40,8 +47,8 @@ export default function LamboCover(props)
            
             const customShader = new THREE.ShaderMaterial({
               uniforms: uniforms,
-              vertexShader: carVertex,
-              fragmentShader: carFragment,
+              vertexShader: isClick ? dissolveVertex : carVertex,
+              fragmentShader: isClick ? dissolveFragment : carFragment,
 
               transparent: true
               
@@ -57,7 +64,7 @@ export default function LamboCover(props)
     })
     return (
         <>
-            <primitive object={scene} {...props}/>
+            <primitive onClick={click} object={scene} {...props}/>
         </>
     )
 }

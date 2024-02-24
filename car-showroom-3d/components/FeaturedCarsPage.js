@@ -88,7 +88,7 @@ const FeaturedCarsPage = () => {
                {/* <RigidBody colliders={false}>
                 <CuboidCollider args={[4,2,9]} position={[0,10.2,2]} />  */}
               <Lambo  position= {[0,1,0]} scale={5} /> 
-              {/* <LamboCover position= {[0,1,0]} scale={6}/> */}
+              <LamboCover position= {[0,1,0]} scale={5}/> 
               
              {/* </RigidBody>  */}
 
