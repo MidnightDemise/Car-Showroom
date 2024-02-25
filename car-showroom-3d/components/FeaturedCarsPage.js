@@ -65,7 +65,7 @@ const FeaturedCarsPage = () => {
 
   return (
     <>
-        <mesh position={[0,5,-25]}>
+        {/* <mesh position={[0,5,-25]}>
           <boxGeometry args={[10,10,15]}/>
           <shaderMaterial
           uniforms={uniforms}
@@ -74,7 +74,7 @@ const FeaturedCarsPage = () => {
           transparent
           />
 
-        </mesh>
+        </mesh> */}
         
 
           <mesh scale={3}  position={[1,0,1]} rotation={[-Math.PI /2 , 0 , 0]} >
@@ -85,12 +85,10 @@ const FeaturedCarsPage = () => {
           
             <Showroom />
              
-               {/* <RigidBody colliders={false}>
-                <CuboidCollider args={[4,2,9]} position={[0,10.2,2]} />  */}
-              <Lambo  position= {[0,1,0]} scale={5} /> 
-              <LamboCover position= {[0,1,0]} scale={5}/> 
+              {/* <Lambo  position= {[0,1,0]} scale={5} />  */}
+              <LamboCover position= {[0,1,0]} scale={5}/>    
               
-             {/* </RigidBody>  */}
+             
 
 
 
