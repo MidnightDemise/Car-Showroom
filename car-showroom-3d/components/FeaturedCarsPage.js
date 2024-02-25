@@ -1,19 +1,18 @@
 
 import { Box, CubeCamera, Environment, Float, Lightformer, OrbitControls, PerspectiveCamera, Sphere, useGLTF } from '@react-three/drei'
-import { applyProps, useFrame } from '@react-three/fiber';
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three';
 import * as LAMINA from 'lamina'
 import { Model } from './GltfConversions/Scene';
-import { CuboidCollider, RapierRigidBody, RigidBody } from '@react-three/rapier';
 import MovingShader from './FeaturedCarsPageComponents/MovingShader';
 import Portal from './FeaturedCarsPageComponents/Portal';
 import Hologram from './FeaturedCarsPageComponents/Hologram';
-import Lambo from './FeaturedCarsPageComponents/Lambo';
 import LamboCover from './FeaturedCarsPageComponents/LamboCover';
-import intersectionVertex from './ReverseOpacityShader/intersectonVertex';
-import fragmentShader from './GroundShader/smokeFragment';
-import intersectionFragment from './ReverseOpacityShader/intersectionFragment';
+
+import { Driver } from './Driver';
+import { WorkingDriver } from './Workingdriver';
+import { WorkingDriverCopy } from '@/public/Workingdriver2';
+import { DriverTexting } from './Drivertext';
 
 
 
@@ -84,10 +83,13 @@ const FeaturedCarsPage = () => {
 
           
             <Showroom />
-             
+              <Driver scale={3.5} rotation={[0 , Math.PI / 2 , 0]} position={[-6,1,0]}/>
+              <WorkingDriver scale={3.5} rotation={[0 , Math.PI / 2 , 0]} position={[12,0,5]}/>
+              <WorkingDriverCopy scale={3.5} rotation={[0 , -Math.PI / 2 , 0]} position={[-12,0,5]}/>
+              <DriverTexting scale={3.5} rotation={[0 , -Math.PI / 2 , 0]} position={[6,1,0]}/>
               {/* <Lambo  position= {[0,1,0]} scale={5} />  */}
               <LamboCover position= {[0,1,0]} scale={5}/>    
-              
+              {/* <OpenText scale={5} position={[0,2,0]}/> */}
              
 
 

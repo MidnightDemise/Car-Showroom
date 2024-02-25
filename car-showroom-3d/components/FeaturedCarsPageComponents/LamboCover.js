@@ -58,7 +58,6 @@ export default function LamboCover(props) {
                 else
                 {
                     if (node.isMesh && originalMaterials[node.uuid]) {
-                        console.log(originalMaterials[node.uuid])
                         node.material = originalMaterials[node.uuid];
                     }
                 }
@@ -70,7 +69,7 @@ export default function LamboCover(props) {
 
     useEffect(() => {
         Object.values(nodes).forEach((node) => {
-            console.log(node);
+           
             originalMaterials[node.uuid] = node.material;
         })
         applyProps(materials.Carosserie, { color: "#000000", emissive: "#000000", envMapIntensity: 10, emissiveIntensity: 5 });
