@@ -88,7 +88,7 @@ const FeaturedCarsPage = () => {
               <WorkingDriverCopy scale={3.5} rotation={[0 , -Math.PI / 2 , 0]} position={[-12,0,5]}/>
               <DriverTexting scale={3.5} rotation={[0 , -Math.PI / 2 , 0]} position={[6,1,0]}/>
               {/* <Lambo  position= {[0,1,0]} scale={5} />  */}
-              <LamboCover position= {[0,1,0]} scale={5}/>    
+              <LamboCover rotation={[0 , Math.PI / 2 , 0]} position= {[0,1,0]} scale={50}/>    
               {/* <OpenText scale={5} position={[0,2,0]}/> */}
              
 

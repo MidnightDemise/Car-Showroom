@@ -16,7 +16,7 @@ import dissolveFragment from "../CarShader/CarCoverDissolveFragment";
 
 
 export default function LamboCover(props) {
-    const { scene, nodes, materials } = useGLTF("FeaturedCars/Lambo/scene.gltf");
+    const { scene, nodes, materials } = useGLTF("FeaturedCars/goblin/scene.gltf");
     const lambo = useRef();
     const [isClick, setIsClicked] = useState(false);
     const [nodeColor, setNodeColor] = useState(new THREE.Vector4(0, 0, 0, 1));
@@ -43,6 +43,7 @@ export default function LamboCover(props) {
                 const hasPositiveR3f = node.getWorldPosition(new THREE.Vector3(0, 0, 0)).z < -10;
 
                 if (hasPositiveR3f && originalMaterials[node.uuid] != null) {
+                    console.log("hi")
                     const customShader = new THREE.ShaderMaterial({
                         uniforms: uniforms,
                         vertexShader: dissolveVertex,
@@ -72,7 +73,7 @@ export default function LamboCover(props) {
            
             originalMaterials[node.uuid] = node.material;
         })
-        applyProps(materials.Carosserie, { color: "#000000", emissive: "#000000", envMapIntensity: 10, emissiveIntensity: 5 });
+        // applyProps(materials.Carosserie, { color: "#000000", emissive: "#000000", envMapIntensity: 10, emissiveIntensity: 5 });
         // applyProps(materials.Tire, { color: "#000000", emissive: "#000000", envMapIntensity: 10, emissiveIntensity: 5 });
     });
 
