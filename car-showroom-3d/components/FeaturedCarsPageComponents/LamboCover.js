@@ -15,9 +15,10 @@ import dissolveFragment from "../CarShader/CarCoverDissolveFragment";
 
 
 
-export default function LamboCover(props) {
-    const { scene, nodes, materials } = useGLTF("FeaturedCars/goblin/scene.gltf");
-    const lambo = useRef();
+export default function Car(props) {
+    const {carModel , isSelected} = props;
+    const { scene, nodes, materials } = useGLTF(`FeaturedCars/${carModel}/scene.gltf`);
+    const car = useRef();
     const [isClick, setIsClicked] = useState(false);
     const [nodeColor, setNodeColor] = useState(new THREE.Vector4(0, 0, 0, 1));
     const [originalMaterials, setOriginalMaterials] = useState({}); // Store original materials
@@ -35,47 +36,60 @@ export default function LamboCover(props) {
         const { clock } = state;
         uniforms._time.value = clock.getElapsedTime();
 
+        const customShader = new THREE.ShaderMaterial({
+            uniforms: uniforms,
+            vertexShader: dissolveVertex,
+            fragmentShader: dissolveFragment,
+            transparent: true
+        });
+
+
         Object.values(nodes).forEach((node) => {
-            if (node.isMesh) {
-                node.castShadow = true;
-                node.receiveShadow = true;
 
-                const hasPositiveR3f = node.getWorldPosition(new THREE.Vector3(0, 0, 0)).z < -10;
-
-                if (hasPositiveR3f && originalMaterials[node.uuid] != null) {
-                    console.log("hi")
-                    const customShader = new THREE.ShaderMaterial({
-                        uniforms: uniforms,
-                        vertexShader: dissolveVertex,
-                        fragmentShader: dissolveFragment,
-                        transparent: true
-                    });
-                    // Store original material before applying custom shader
-                    if (!originalMaterials[node.uuid]) {
-                        originalMaterials[node.uuid] = node.material;
-                    }
-                    node.material = customShader;
-                }
-                else
-                {
-                    if (node.isMesh && originalMaterials[node.uuid]) {
+            if(originalMaterials[node.uuid] != null)
+            {
+                if (node.isMesh) {
+                    node.castShadow = true;
+                    node.receiveShadow = true;
+        
+                    const hasPositiveR3f = node.getWorldPosition(new THREE.Vector3(0, 0, 0)).z < -10;
+        
+                    if (hasPositiveR3f) {
+                        node.material = customShader;
+                    } else if (!hasPositiveR3f && originalMaterials[node.uuid]) {
                         node.material = originalMaterials[node.uuid];
                     }
                 }
             }
+           
+        });
+    
+
+        if (isSelected && car.current.position.z < 0)
+        {
+            car.current.position.z += 0.1;
+        }
+        else if(!isSelected && car.current.position.z > -22)
+        {
+            car.current.position.z -= 0.1;
+        }
+
+    });
+    
+   
+    useEffect(() => {
+        // Store original materials
+        Object.values(nodes).forEach((node) => {
+            originalMaterials[node.uuid] = node.material;
         });
 
-        if (lambo.current.position.z > -22) lambo.current.position.z -= 0.1;
-    });
+        Object.values(materials).forEach((material) => {
+            console.log(material);
 
-    useEffect(() => {
-        Object.values(nodes).forEach((node) => {
-           
-            originalMaterials[node.uuid] = node.material;
+            material.envMapIntensity = 10;
+
         })
-        // applyProps(materials.Carosserie, { color: "#000000", emissive: "#000000", envMapIntensity: 10, emissiveIntensity: 5 });
-        // applyProps(materials.Tire, { color: "#000000", emissive: "#000000", envMapIntensity: 10, emissiveIntensity: 5 });
-    });
+    }, []);
 
     // Revert shader to original material
     const revertShader = () => {
@@ -89,7 +103,7 @@ export default function LamboCover(props) {
 
     return (
         <>
-            <primitive ref={lambo}  object={scene} {...props} />
+            <primitive ref={car}  object={scene} {...props} />
         </>
     );
 }

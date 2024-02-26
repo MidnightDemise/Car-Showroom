@@ -7,12 +7,12 @@ import { Model } from './GltfConversions/Scene';
 import MovingShader from './FeaturedCarsPageComponents/MovingShader';
 import Portal from './FeaturedCarsPageComponents/Portal';
 import Hologram from './FeaturedCarsPageComponents/Hologram';
-import LamboCover from './FeaturedCarsPageComponents/LamboCover';
 
 import { Driver } from './Driver';
 import { WorkingDriver } from './Workingdriver';
 import { WorkingDriverCopy } from '@/public/Workingdriver2';
 import { DriverTexting } from './Drivertext';
+import Car from './FeaturedCarsPageComponents/LamboCover';
 
 
 
@@ -29,39 +29,29 @@ function Showroom(props)
 
 
 
-
-
 const FeaturedCarsPage = () => {
   
+  const [selectedCarIndex, setSelectedCarIndex] = useState(0);
+  const carNames = ["Challenger", "Lambo", "RocketLeague"];
+  const [selectedCar, setSelectedCar] = useState(null);
 
- 
+  const handleNextCar = () => {
+    setSelectedCarIndex((prevIndex) => (prevIndex + 1) % carNames.length);
+  };
 
-  const uniforms = useMemo(() => ({
-    // _normalMatrix: {
-    //   type: 'mat3',
-    //   value: {
-    //     elements: [1, 0, 0, 0, 1, 0, 0, 0, 1]
-    //   }
-    // },
-    // _viewMatrix: {
-    //   type: 'mat4',
-    //   value: {
-    //     elements: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]
-    //   }
-    // },
-    _screenSize: {
-      type: 'vec4',
-      value: {
-        x: 0,
-        y: 0,
-        z: 0,
-        w: 0
-      }
-    }
-  }), []);
+  const handleCarSelection = (carIndex) => {
+    setSelectedCar(carIndex);
 
+  };
+  
 
-
+  const cars = [
+     { carModel: "Challenger", rotation: [0, Math.PI, 0], position: [0, 1, -8], scale: 0.03, name: "Challenger", isSelected: selectedCar === "Challenger" },
+     { carModel: "Lambo", rotation: [0, 0, 0], position: [0, 1, -22], scale: 5, name: "Lambo", isSelected: selectedCar === "Lambo" },
+    { carModel: "RocketLeague", rotation: [0, -Math.PI / 2, 0], position: [0, 1, -22], scale: 0.1, name: "RocketLeague", isSelected: selectedCar === "RocketLeague" },
+  { carModel: "Bugatti", rotation: [0, Math.PI, 0], position: [0, 1, -25], scale: 3.5, name: "Bugatti", isSelected: selectedCar === "Bugatti" }
+//  { carModel: "test", rotation: [0, Math.PI, 0], position: [0, 1, -25], scale: 0.1, name: "test", isSelected: selectedCar === "test" }
+  ];
   return (
     <>
         {/* <mesh position={[0,5,-25]}>
@@ -88,7 +78,18 @@ const FeaturedCarsPage = () => {
               <WorkingDriverCopy scale={3.5} rotation={[0 , -Math.PI / 2 , 0]} position={[-12,0,5]}/>
               <DriverTexting scale={3.5} rotation={[0 , -Math.PI / 2 , 0]} position={[6,1,0]}/>
               {/* <Lambo  position= {[0,1,0]} scale={5} />  */}
-              <LamboCover rotation={[0 , Math.PI / 2 , 0]} position= {[0,1,0]} scale={50}/>    
+              {cars.map((car, index) => (
+                <Car
+                  key={index}
+                  carModel={car.carModel}
+                  rotation={car.rotation}
+                  position={car.position}
+                  scale={car.scale}
+                  name={car.name}
+                  onClick={() => handleCarSelection(car.name)}
+                  isSelected={car.isSelected}
+                />
+              ))}
               {/* <OpenText scale={5} position={[0,2,0]}/> */}
              
 
@@ -134,10 +135,10 @@ function Lightformers({ positions = [2, 0, 2, 0, 2, 0, 2, 0] }) {
         {/* Background */}
         <Float>
         <mesh scale={100}>
-          <sphereGeometry args={[1, 64, 64]} />
+          <sphereGeometry args={[1, 32, 32]} />
           <LAMINA.LayerMaterial refractionRatio={5} reflectivity={5} emissiveIntensity={1} lightMapIntensity={50} side={THREE.BackSide}>
             <LAMINA.Color color="#444" alpha={.5} mode="additive" />
-            <LAMINA.Depth colorA="white" colorB="black" alpha={.5} mode="additive" near={0} far={300} origin={[100, 100, 100]} />
+            <LAMINA.Depth colorA="white" colorB="cyan" alpha={.5} mode="subtract" near={0} far={300} origin={[100, 100, 100]} />
           </LAMINA.LayerMaterial>
         </mesh>
         </Float>
