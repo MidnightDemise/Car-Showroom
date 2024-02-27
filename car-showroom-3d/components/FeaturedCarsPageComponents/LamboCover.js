@@ -17,6 +17,8 @@ import dissolveFragment from "../CarShader/CarCoverDissolveFragment";
 
 export default function Car(props) {
     const {carModel , isSelected} = props;
+    const [carWheels, setCarWheels] = useState([]);
+
     const { scene, nodes, materials } = useGLTF(`FeaturedCars/${carModel}/scene.gltf`);
     const car = useRef();
     const [isClick, setIsClicked] = useState(false);
@@ -43,7 +45,7 @@ export default function Car(props) {
             transparent: true
         });
 
-
+        
         Object.values(nodes).forEach((node) => {
 
             if(originalMaterials[node.uuid] != null)
@@ -61,6 +63,9 @@ export default function Car(props) {
                     }
                 }
             }
+
+
+           
            
         });
     
@@ -68,10 +73,23 @@ export default function Car(props) {
         if (isSelected && car.current.position.z < 0)
         {
             car.current.position.z += 0.1;
+
+            carWheels.forEach((wheel) => {
+            
+                wheel.rotation.x -= 0.1; // Rotate around the x-axis
+            });
         }
         else if(!isSelected && car.current.position.z > -22)
         {
             car.current.position.z -= 0.1;
+           
+        }
+        if(!isSelected)
+        {
+            carWheels.forEach((wheel) => {
+            
+                wheel.rotation.x += 0.1; // Rotate around the x-axis
+            });
         }
 
     });
@@ -81,14 +99,20 @@ export default function Car(props) {
         // Store original materials
         Object.values(nodes).forEach((node) => {
             originalMaterials[node.uuid] = node.material;
+
+            // if (node.name === "anteriore_dest_20" || node.name === "anteriore_sins_30" || node.name === "ppst_sinis_115" || node.name === "post_dest_105")  {
+            //    
+            // }
+            if(node.name === "geo_rim_tileable3_Ghostrim_0" || node.name === "geo_rim_tileable2_Ghostrim_0" || node.name === "geo_rim_tileable1_Ghostrim_0" || node.name === "geo_rim_tileable_Ghostrim_0")
+                setCarWheels(prevWheels => [...prevWheels, node]); // Add node to the carWheels array
+
         });
 
         Object.values(materials).forEach((material) => {
-            console.log(material);
-
             material.envMapIntensity = 10;
 
         })
+
     }, []);
 
     // Revert shader to original material
