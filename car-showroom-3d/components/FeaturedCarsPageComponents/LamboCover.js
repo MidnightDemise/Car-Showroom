@@ -100,10 +100,11 @@ export default function Car(props) {
         Object.values(nodes).forEach((node) => {
             originalMaterials[node.uuid] = node.material;
 
-            // if (node.name === "anteriore_dest_20" || node.name === "anteriore_sins_30" || node.name === "ppst_sinis_115" || node.name === "post_dest_105")  {
-            //    
-            // }
-            if(node.name === "geo_rim_tileable3_Ghostrim_0" || node.name === "geo_rim_tileable2_Ghostrim_0" || node.name === "geo_rim_tileable1_Ghostrim_0" || node.name === "geo_rim_tileable_Ghostrim_0")
+            if (node.name === "anteriore_dest_20" || node.name === "anteriore_sins_30" || node.name === "ppst_sinis_115" || node.name === "post_dest_105")  {
+                setCarWheels(prevWheels => [...prevWheels, node]); // Add node to the carWheels array
+
+            }
+            else if(node.name === "geo_rim_tileable3_Ghostrim_0" || node.name === "geo_rim_tileable2_Ghostrim_0" || node.name === "geo_rim_tileable1_Ghostrim_0" || node.name === "geo_rim_tileable_Ghostrim_0")
                 setCarWheels(prevWheels => [...prevWheels, node]); // Add node to the carWheels array
 
         });

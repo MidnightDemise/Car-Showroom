@@ -51,8 +51,8 @@ const FeaturedCarsPage = () => {
     //   { carModel: "Challenger", rotation: [0, Math.PI, 0], position: [0, 1, -8], scale: 0.03, name: "Challenger", isSelected: selectedCar === "Challenger" },
       { carModel: "Lambo", rotation: [0, 0, 0], position: [0, 1, -22], scale: 5, name: "Lambo", isSelected: selectedCar === "Lambo" },
     { carModel: "ETron", rotation: [0, 0 , 0], position: [0, 1, -22], scale: 0.4, name: "ETron", isSelected: selectedCar === "ETron" },
-  //  { carModel: "Bugatti", rotation: [0, Math.PI, 0], position: [0, 1, -25], scale: 3.5, name: "Bugatti", isSelected: selectedCar === "Bugatti" },
-  // { carModel: "test", rotation: [0, 0, 0], position: [0, 3.2, -25], scale: 3, name: "test", isSelected: selectedCar === "test" }
+  // { carModel: "Bugatti", rotation: [0, Math.PI, 0], position: [0, 1, -25], scale: 3.5, name: "Bugatti", isSelected: selectedCar === "Bugatti" },
+  { carModel: "test", rotation: [0, 0, 0], position: [0, 3.2, -25], scale: 3, name: "test", isSelected: selectedCar === "test" }
   ];
   return (
     <>
