@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 const NavbarUser = () => {
@@ -16,17 +17,18 @@ const NavbarUser = () => {
             </a>
           </li>
           <li class="hidden md:block">
-            <a class="cursor-pointer text-sm font-medium text-gray-50 hover:text-gray-50/80">Shop</a>
+            <Link href={'/shop/dashboard'} class="cursor-pointer text-sm font-medium text-gray-50 hover:text-gray-50/80">DashBoard</Link>
           </li>
           <li class="hidden md:block">
-            <a class="cursor-pointer text-sm font-medium text-gray-50 hover:text-gray-50/80">Rent A Car</a>
+            <Link href={'/shop/cars'} class="cursor-pointer text-sm font-medium text-gray-50 hover:text-gray-50/80">Shop</Link>
           </li>
           <li class="hidden md:block">
-            <a class="cursor-pointer text-sm font-medium text-gray-50 hover:text-gray-50/80">Contact</a>
+            <Link href={'/shop/rent'} class="cursor-pointer text-sm font-medium text-gray-50 hover:text-gray-50/80">Rent A Car</Link>
           </li>
-          <li className='hidden md:block'>
-            <a className='cursor-pointer text-sm font-medium text-gray-50 hover:text-gray-50/80'>About Us</a> 
+          <li class="hidden md:block">
+            <Link href={'/shop/cart'} class="cursor-pointer text-sm font-medium text-gray-50 hover:text-gray-50/80">Cart</Link>
           </li>
+         
         </ul>
       </li>
       <li>

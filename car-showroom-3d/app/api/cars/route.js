@@ -1,5 +1,6 @@
 import { connectMongoDB } from "@/lib/mongodb";
 import Car from "@/models/carModel";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function POST(req)

@@ -76,6 +76,7 @@ function Tube({curve}){
       uniform float time;
       varying vec3 vNormal;
       varying float vProgress; 
+
       void main() {
         vUv = uv;
 
@@ -83,7 +84,7 @@ function Tube({curve}){
 
 
         vProgress = smoothstep(-1.,1.,sin(vUv.x*8. + time));
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(position  * cos((vProgress * 3.0 + time)) * 2.0, 1.0);
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position  * cos(vProgress * 3.0) * 2.0, 1.0);
       }
     `,
     // fragment shader

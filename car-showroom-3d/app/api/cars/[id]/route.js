@@ -5,18 +5,21 @@ import { NextResponse } from "next/server";
 export async function GET(params)
 {
 
+    const url = params.url;
+
+    const parsedUrl = url.split("/");
+
     await connectMongoDB();
 
-    const result = await Car.findOne(params.id);
+    const result = await Car.findById({_id: parsedUrl[5] });
+
+    console.log(result);
 
     return NextResponse.json(result);
 }
 
 
 export async function PUT(request , params){
-
-       
-
 
     const { id: _id , newTitle: title , newDescription: description , newImage : image , newProperties : car_properties } =  await request.json();
 

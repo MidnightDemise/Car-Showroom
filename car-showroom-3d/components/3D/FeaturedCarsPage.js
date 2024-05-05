@@ -1,3 +1,5 @@
+'use client'
+
 
 import { Box, CubeCamera, Environment, Float, Lightformer, OrbitControls, PerspectiveCamera, Sphere, useGLTF } from '@react-three/drei'
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'

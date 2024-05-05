@@ -1,4 +1,5 @@
 import { signOut } from 'next-auth/react';
+import Link from 'next/link';
 import { redirect, useRouter } from 'next/navigation';
 import React from 'react'
 
@@ -77,7 +78,7 @@ const MainPageHtml = () => {
         <p className="mt-5 ">Explore the electrifying journey towards a sustainable tomorrow where innovation meets eco-consciousness, driving us towards a brighter future.</p>
 
         <div className="mt-10 flex items-center justify-around">
-          <button className="bg-black bg-opacity-25 border border-black rounded-md py-2 px-10 hover:bg-black hover:bg-opacity-50 transition transition-duration-300">Shop Now</button>
+          <Link href={'shop'} className="bg-black bg-opacity-25 border border-black rounded-md py-2 px-10 hover:bg-black hover:bg-opacity-50 transition transition-duration-300">Shop Now</Link>
           <button className="bg-black bg-opacity-25 border border-black rounded-md py-2 px-10 hover:bg-black hover:bg-opacity-50  transition transition-duration-300">Showroom</button>
 
         </div>

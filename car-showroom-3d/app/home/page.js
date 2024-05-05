@@ -2,13 +2,14 @@
 
 import MainPageHtml from '@/components/2D/MainPageHtml'
 import MainPage from '@/components/3D/MainPageTest'
+import ShaderPlayground from '@/components/GLSL/ShaderPlayground'
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { Physics } from '@react-three/rapier'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import React, { Suspense, useEffect } from 'react'
-
+import * as THREE from 'three'
 const HomePage = () => {
 
  
@@ -43,7 +44,7 @@ const HomePage = () => {
       
           <OrbitControls camera={undefined} enablePan={false} enableZoom={false} />  
         
-        
+        <ShaderPlayground/>
 
         <Suspense>
          <Physics debug>
@@ -61,11 +62,11 @@ const HomePage = () => {
         </Suspense> 
 
 
-        <MainPage/>
+        {/* <MainPage/> */}
 
       </Canvas>
 
-      <MainPageHtml/>
+      {/* <MainPageHtml/> */}
 
     </>
   )
