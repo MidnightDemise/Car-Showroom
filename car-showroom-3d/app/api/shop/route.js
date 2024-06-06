@@ -43,3 +43,20 @@ export async function PUT(req)
 
 
 }
+
+
+export async function GET()
+{
+    const email = (await getServerSession()).user.email;
+
+    await connectMongoDB();
+
+    const res = await Cart.findOne({email})
+
+
+    return NextResponse.json(res);
+
+    
+
+
+}

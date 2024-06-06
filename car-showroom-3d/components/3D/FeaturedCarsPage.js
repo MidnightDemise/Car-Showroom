@@ -33,28 +33,28 @@ function Showroom(props)
 
 
 
-const FeaturedCarsPage = () => {
+const FeaturedCarsPage = ({carIndex}) => {
+
   
   const [selectedCarIndex, setSelectedCarIndex] = useState(0);
-  const carNames = ["Challenger", "Lambo", "RocketLeague"];
+  const carNames = ["Lambo", "Challenger", "RocketLeague"];
   const [selectedCar, setSelectedCar] = useState(null);
 
-  const handleNextCar = () => {
-    setSelectedCarIndex((prevIndex) => (prevIndex + 1) % carNames.length);
-  };
 
-  const handleCarSelection = (carIndex) => {
-    setSelectedCar(carIndex);
+  useEffect(() => {
+    console.log(carIndex);
+    setSelectedCar(carNames[carIndex]);
+}, [carIndex]);
 
-  };
+
   
 
   const cars = [
     //   { carModel: "Challenger", rotation: [0, Math.PI, 0], position: [0, 1, -8], scale: 0.03, name: "Challenger", isSelected: selectedCar === "Challenger" },
       { carModel: "Lambo", rotation: [0, 0, 0], position: [0, 1, -22], scale: 5, name: "Lambo", isSelected: selectedCar === "Lambo" },
-    { carModel: "ETron", rotation: [0, 0 , 0], position: [0, 1, -22], scale: 0.4, name: "ETron", isSelected: selectedCar === "ETron" },
+    { carModel: "ETron", rotation: [0, 0 , 0], position: [0, 1, -22], scale: 0.4, name: "ETron", isSelected: selectedCar === "Challenger" },
   // { carModel: "Bugatti", rotation: [0, Math.PI, 0], position: [0, 1, -25], scale: 3.5, name: "Bugatti", isSelected: selectedCar === "Bugatti" },
-  { carModel: "test", rotation: [0, 0, 0], position: [0, 3.2, -25], scale: 3, name: "test", isSelected: selectedCar === "test" }
+  { carModel: "test", rotation: [0, 0, 0], position: [0, 3.2, -25], scale: 3, name: "test", isSelected: selectedCar === "RocketLeague" }
   ];
   return (
     <>
@@ -94,7 +94,6 @@ const FeaturedCarsPage = () => {
                    position={car.position}
                    scale={car.scale}
                    name={car.name}
-                   onClick={() => handleCarSelection(car.name)}
                    isSelected={car.isSelected}
                  />
                ))}  

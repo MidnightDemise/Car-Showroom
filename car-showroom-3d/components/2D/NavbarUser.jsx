@@ -11,34 +11,31 @@ const NavbarUser = () => {
           <li>
             <a class="text-gray-50 hover:opacity-80">
               <div>
+                <Link href={"/home"}>
                 <span class="text-xl font-bold">E</span>
                 <span class="text-xl font-bold text-white">Volutionary</span>
+                </Link>
+               
               </div>
             </a>
           </li>
-          <li class="hidden md:block">
-            <Link href={'/shop/dashboard'} class="cursor-pointer text-sm font-medium text-gray-50 hover:text-gray-50/80">DashBoard</Link>
-          </li>
-          <li class="hidden md:block">
-            <Link href={'/shop/cars'} class="cursor-pointer text-sm font-medium text-gray-50 hover:text-gray-50/80">Shop</Link>
-          </li>
-          <li class="hidden md:block">
-            <Link href={'/shop/rent'} class="cursor-pointer text-sm font-medium text-gray-50 hover:text-gray-50/80">Rent A Car</Link>
-          </li>
-          <li class="hidden md:block">
-            <Link href={'/shop/cart'} class="cursor-pointer text-sm font-medium text-gray-50 hover:text-gray-50/80">Cart</Link>
-          </li>
+        
+            <Link href={'/shop/dashboard'} class="hidden md:block cursor-pointer text-sm font-medium text-gray-50 hover:text-gray-50/80">DashBoard</Link>
+            <Link href={'/shop/cars'} class="hidden md:block cursor-pointer text-sm font-medium text-gray-50 hover:text-gray-50/80">Shop</Link>
+            <Link href={'/shop/rent'} class="hidden md:block cursor-pointer text-sm font-medium text-gray-50 hover:text-gray-50/80">Rent A Car</Link>
+            <Link href={'/shop/cart'} class="hidden md:block cursor-pointer text-sm font-medium text-gray-50 hover:text-gray-50/80">Cart</Link>
+            <Link href={'/shop/contact'} class="hidden md:block cursor-pointer text-sm font-medium text-gray-50 hover:text-gray-50/80">Contact Us</Link>
          
         </ul>
       </li>
       <li>
         <ul class="flex items-center gap-x-4">
-          
+{/*           
           <li class="hidden md:block">
-            <button class="cursor-pointer bg-yellow-600 px-4 py-2 text-sm font-medium text-gray-50 text-gray-50 hover:text-gray-50/80">
+            <button o class="cursor-pointer bg-yellow-600 px-4 py-2 text-sm font-medium text-gray-50 text-gray-50 hover:text-gray-50/80">
               <a>Sign Out</a>
             </button>
-          </li>
+          </li> */}
           <li class="md:hidden">
             <button
               aria-label="menu button"

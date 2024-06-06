@@ -44,29 +44,29 @@ const HomePage = () => {
       
           <OrbitControls camera={undefined} enablePan={false} enableZoom={false} />  
         
-        <ShaderPlayground/>
+        {/* <ShaderPlayground/> */}
 
         <Suspense>
          <Physics debug>
           
-            {/* <FeaturedCarsPage/>  */}
+             {/* <FeaturedCarsPage/>  */}
         
 
         </Physics>  
 
 
         <OrbitControls autoRotate maxPolarAngle={45} autoRotateSpeed={3} />
-        <PerspectiveCamera makeDefault position={[0,0,2.5]} rotation={[0,Math.PI - Math.PI/4 , 0]} fov={45} far={1000} near={1}/>
+        <PerspectiveCamera makeDefault position={[0,0,5]} rotation={[0,Math.PI - Math.PI/4 , 0]} fov={45} far={1000} near={1}/>
 
           
         </Suspense> 
 
 
-        {/* <MainPage/> */}
+         <MainPage/>
 
       </Canvas>
 
-      {/* <MainPageHtml/> */}
+       <MainPageHtml/>
 
     </>
   )

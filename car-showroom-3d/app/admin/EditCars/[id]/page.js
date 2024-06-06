@@ -1,6 +1,7 @@
 'use client'
 
 
+import Navbar from '@/components/2D/Navbar';
 import { CldUploadButton } from 'next-cloudinary';
 import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation'
@@ -114,10 +115,11 @@ const EditCar = () => {
     }
   return (
     <>
+    <Navbar/>
     
 
 <div className="max-w-4xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Add Car</h2>
+      <h2 className="text-2xl font-bold mb-4">Editing Car</h2>
       <form onSubmit={handleSubmit} >
         <div className="mb-4">
           <label htmlFor="title" className="block text-gray-700 font-bold mb-2">Title</label>
@@ -183,7 +185,7 @@ const EditCar = () => {
           onClick={handleSubmit}
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
-          Add Car
+          Update Car
         </button>
       </form>
     </div>

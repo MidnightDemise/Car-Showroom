@@ -15,6 +15,7 @@ const AddCars = () => {
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
   const [properties , setProperties] = useState('');
+  const [price , setPrice] = useState(0);
   const [loading, setLoading] = useState(false);
 
 
@@ -72,6 +73,7 @@ const AddCars = () => {
                 title,
                 description,
                 image,
+                price,
                 properties: formattedProperties
             })
         })
@@ -181,6 +183,20 @@ const AddCars = () => {
 
         </CldUploadButton>
         
+        <br/>
+
+        <div className="mb-4">
+          <label htmlFor="price" className="block text-gray-700 font-bold mb-2">Price</label>
+          <input
+            type="text"
+            id="price"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            className="border rounded-md p-2 w-full"
+            placeholder="Enter Price"
+          />
+        </div>
+
         <br/>
 
 

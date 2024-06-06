@@ -30,6 +30,8 @@ const CartComponent = () => {
             if (result.ok) {
               const carsData = await result.json();
 
+              console.log(carsData.items)
+
               setCars(carsData);
               setIsEmpty(false);
               console.log(carsData)
@@ -46,7 +48,7 @@ const CartComponent = () => {
         fetchCars();
         
 
-      }, [ session ,router]);
+      }, []);
 
 
 
@@ -74,17 +76,20 @@ const CartComponent = () => {
         
 
         try {
+
+
+            const caritems = cars.items;
             
-            const res = await fetch("http://localhost:3000/api/orders", {
+            const res = await fetch("http://localhost:3000/api/orders/", {
                 method: "POST",
                 
                 headers: {
                     "Content-Type" : "application/json"
                 },
 
-                body: JSON.stringify({
-                    cars
-                })
+                body: JSON.stringify(
+                    caritems
+                )
             })
 
             if(res.ok) console.log("Successfully posted the cart in orders");

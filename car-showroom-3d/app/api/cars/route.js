@@ -5,11 +5,11 @@ import { NextResponse } from "next/server";
 
 export async function POST(req)
 {
-    const { title , description , image , properties } = await req.json();
+    const { title , description , image , properties , price } = await req.json();
 
     await connectMongoDB();
 
-    await Car.create({title , description , image , car_properties : properties});
+    await Car.create({title , description , image , car_properties : properties , price});
 
     return NextResponse.json({message: "Successfully created the Car"}, {status: 201});
 }

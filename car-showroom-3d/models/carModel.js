@@ -14,7 +14,7 @@ const carSchema = new Schema( {
 
     price : {
         type: String , 
-        required: true,
+        required: false,
     },
 
     image : {
@@ -23,10 +23,7 @@ const carSchema = new Schema( {
     },
 
 
-    carlogo : {
-        type: String,
-        required: true,
-    },
+
     
     car_properties: {
         type: String,

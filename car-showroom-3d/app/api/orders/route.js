@@ -4,59 +4,54 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
-    const session = await getServerSession();
+    try {
+        const session = await getServerSession();
+        if (!session) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
 
-    const { cars } = await req.json();
-    const email = session?.user?.email;
+        // Parse the request body
+        const caritems = await req.json();  // Directly destructuring items from the parsed body
 
-    await connectMongoDB();
+        const email = session.user.email;
 
-    const carsData = [];
+        await connectMongoDB();
 
-    const date = new Date();
+       const carsData = {
+            quantity: caritems[0].quantity,
+            price: caritems[0].price,
+            name: caritems[0].cars.title,
+            image: caritems[0].cars.image,
 
-    
-    for (const item of cars.items) {
-        const { quantity, price } = item;
+       }
+           
         
-        
-        const carData = {
 
 
-            quantity,
-            price,
-            name: item.cars.title,
-            image: item.cars.image,
+        const res = await Order.create({ email, car: carsData, orderDate: new Date().toISOString() });
 
-
-
-        };
-
-
-        carsData.push(carData);
+        console.log(res);
+        return NextResponse.json({ message: "Successfully placed order" }, { status: 201 });
+    } catch (error) {
+        console.error("Error placing order:", error);
+        return NextResponse.json({ error: "Failed to place order" }, { status: 500 });
     }
-
-
-    await Order.create({ email, car: carsData  , orderDate: date.toString()});
-
-    return NextResponse.json({ message: "Successfully placed order" }, { status: 201 });
 }
 
+export async function GET() {
+    try {
+        const session = await getServerSession();
+        if (!session) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
 
+        const email = session.user.email;
+        await connectMongoDB();
 
-
-export async function GET()
-{
-
-    const session = await getServerSession();
-
-    const email = session.user.email;
-
-    await connectMongoDB();
-
-    const res = await Order.findOne({email})
-
-
-
-    return NextResponse.json(res);
+        const res = await Order.findOne({ email });
+        return NextResponse.json(res);
+    } catch (error) {
+        console.error("Error fetching orders:", error);
+        return NextResponse.json({ error: "Failed to fetch orders" }, { status: 500 });
+    }
 }

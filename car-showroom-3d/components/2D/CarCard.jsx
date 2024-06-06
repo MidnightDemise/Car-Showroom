@@ -9,55 +9,51 @@ import React, { useEffect, useState } from 'react';
 const CarCard = ({ id , title, description, image }) => {
 
 
- // Add the selected carId to the cart array
+  const [cart, setCart] = useState([{}]); // Initialize cart state
 
-     
+  useEffect(() => {
+      localStorage.clear();
+      const savedCart = JSON.parse(localStorage.getItem('cart')) || [];
+      setCart(savedCart);
+  }, []);
 
-     const [cart, setCart] = useState([{}]); // Initialize cart state
-
-    useEffect(() => {
-        const savedCart = JSON.parse(localStorage.getItem('cart')) || [];
-        setCart(savedCart);
-    }, []);
-
-    const addToCart = async (carId) => {
-        try {
-            const res = await fetch(`http://localhost:3000/api/cars/${carId}`);
-            const finalRes = await res.json();
-            if (res.ok) {
-                const { title, description, image } = finalRes;
-                const carItem = { title, description, image };
-                const newCart = [...cart, carItem];
-                setCart(newCart);
-                localStorage.setItem('cart', JSON.stringify(newCart));
-                
-                await fetch("http://localhost:3000/api/shop", {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        cart: newCart
-                    })
-                });
-            }
-        } catch (error) {
-            console.log("Error: ", error);
-        }
-    };
-    
+  const addToCart = async (carId) => {
+      try {
+          const res = await fetch(`http://localhost:3000/api/cars/${carId}`);
+          const finalRes = await res.json();
+          if (res.ok) {
+              const { title, description, image } = finalRes;
+              const carItem = { title, description, image };
+              const newCart = [...cart, carItem];
+              setCart(newCart);
+              localStorage.setItem('cart', JSON.stringify(newCart));
+              
+              await fetch("http://localhost:3000/api/shop", {
+                  method: "PUT",
+                  headers: {
+                      "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                      cart: newCart
+                  })
+              });
+          }
+      } catch (error) {
+          console.log("Error: ", error);
+      }
+  };
+  
 
 
 
   return (
-        <div className="hero">
+        <div className="hero bg-black text-black">
             <img className="hero-profile-img" src={image} alt="" />
-            <div className="hero-description-bk"></div>
             <div className="hero-logo">
-                <img src="https://miscmedia-9gag-fun.9cache.com/images/thumbnail-facebook/1557291375.3948_Dy2yZu_n.jpg" alt="" />
+                
             </div>
-            <div className="hero-description">
-                <p>{title}</p>
+            <div className=" p-4 text-black hero-description">
+                <p className='text-black'>{title}</p>
             </div>
             <div className="hero-btn">
                 <button onClick={() => {addToCart(id)}}>Add To Cart</button>

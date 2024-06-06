@@ -6,6 +6,9 @@ import React from 'react'
 const MainPageHtml = () => {
 
 
+  const router = useRouter();
+
+
   const centeredTextStyle = {
     position: 'absolute',
     top: '50%',
@@ -58,13 +61,16 @@ const MainPageHtml = () => {
 
 <div style={navbarStyle} className="flex justify-between items-center px-5 py-3">
         <div className="ml-5 font-bold text-xl font-mono">
-          <h1>EVolutionary</h1>
+          <Link href={"/home"}>EVolutionary</Link>
         </div>
-        <ul className="flex mr-5 space-x-4 font-mono ">
-          <li className="text-lg"><a href="#" className="hover:text-gray-500 transition transition-duration-300 mr-5">Home</a></li>
-          <li className="text-lg"><a href="#" className="hover:text-gray-500 transition transition-duration-300 mr-5">About</a></li>
-          <li className="text-lg"><a href="#" className="hover:text-gray-500 transition transition-duration-300 mr-5">Services</a></li>
-          <li className="text-lg"><a href="#" className="hover:text-gray-500 transition transition-duration-500 mr-5">Contact</a></li>
+        <ul className="flex mr-5 space-x-5 font-mono">
+          <Link className="text-lg hover:text-gray-500 transition duration-300 mr-5" href="/shop/dashboard">Shop</Link>
+          <Link className="text-lg hover:text-gray-500 transition duration-300 mr-5" href="/shop/cars">Cars</Link>
+          <Link className="text-lg hover:text-gray-500 transition duration-300 mr-5" href="/shop/rent">Rent</Link>
+          <Link className="text-lg hover:text-gray-500 transition duration-300 mr-5" href="/shop/cart">Cart</Link>
+          <Link className="text-lg hover:text-gray-500 transition duration-300 mr-5" href="/shop/rent">About us</Link>
+          <Link className="text-lg hover:text-gray-500 transition duration-300 mr-5" href="/shop/rent">Contact</Link>
+
         </ul>
         <div className="mr-5">
           <button onClick={handleSignOut} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
@@ -76,11 +82,9 @@ const MainPageHtml = () => {
       <div style={centeredTextStyle}>
         <h1 className="text-5xl font-bold">Powering the Future</h1>
         <p className="mt-5 ">Explore the electrifying journey towards a sustainable tomorrow where innovation meets eco-consciousness, driving us towards a brighter future.</p>
-
-        <div className="mt-10 flex items-center justify-around">
-          <Link href={'shop'} className="bg-black bg-opacity-25 border border-black rounded-md py-2 px-10 hover:bg-black hover:bg-opacity-50 transition transition-duration-300">Shop Now</Link>
-          <button className="bg-black bg-opacity-25 border border-black rounded-md py-2 px-10 hover:bg-black hover:bg-opacity-50  transition transition-duration-300">Showroom</button>
-
+        <div className="mt-10 grid grid-cols-1 sm:flex sm:justify-around sm:gap-4">
+          <Link href={'shop/dashboard'} className="bg-black bg-opacity-25 border border-black rounded-md py-2 px-10 hover:bg-black hover:bg-opacity-50 transition transition-duration-300 mb-4 sm:mb-0">Shop Now</Link>
+          <Link href={"/experience"} className="bg-black bg-opacity-25 border border-black rounded-md py-2 px-10 hover:bg-black hover:bg-opacity-50  transition transition-duration-300">Showroom</Link>
         </div>
       </div>
     </>
