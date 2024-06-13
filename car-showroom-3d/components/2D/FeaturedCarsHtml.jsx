@@ -171,19 +171,6 @@ const FeaturedCarsHtml = () => {
         </div>
       </div>
 
-      <div style={commentBoxStyle}>
-      <h1 className='text-5xl'>COMMENTS</h1>
-
-        <textarea 
-          rows={17}
-          cols={10}
-          disabled
-          onChange={formattedComments}
-          value={formattedComments}
-          type="text" 
-          class="mt-4 bg-transparent w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-      ></textarea>
-      </div>
       
 
 
@@ -191,19 +178,9 @@ const FeaturedCarsHtml = () => {
 
 
 
-      <div style={centeredTextStyle}>
-        <input 
-          onChange={(e) => setCommentDescription(e.target.value)}
-          type="text" 
-          placeholder="Add a comment" 
-          className="mt-0 bg-black bg-opacity-50 w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      <button onClick={(e) => handleCommentButton(e)} className='bg-black h-full w-50  px-4 py-2 mx-2 rounded-md  text-center '>
-       Comment
-      </button>
+     
 
-      </div>
-
+      
 
     </>
   )

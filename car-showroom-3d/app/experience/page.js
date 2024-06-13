@@ -76,9 +76,8 @@ const experiencepage = () => {
       <FeaturedCarsHtml/>
 
       <div style={nextCarButton}>
-        deded
         <button onClick={() => handleCarSelection()} className='bg-black h-full w-50  px-4 py-2 mx-2 rounded-md  text-center '>
-         Next Car
+         Next
         </button>
   
         </div>
